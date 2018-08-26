@@ -1,0 +1,50 @@
+<div id="body">
+	<div id="content">
+		<img src="assets/images/logo.png" width="200px" /><br><br>
+		<form autocomplete="off" novalidate class="login-form" [formGroup]="form">
+			<fieldset>
+					<div class="input-group" style="padding-bottom: 10px">
+						<div class="input-group-prepend">
+							<div class="input-group-text" id="btnGroupAddon">
+								<i class="material-icons">person</i>
+							</div>
+						</div>
+						<input type="text" formControlName="email" class="form-control" 
+									placeholder="EMAIL" aria-label="Input group example" aria-describedby="btnGroupAddon">
+					</div>
+
+					<div class="input-group" style="padding-bottom: 10px">
+						<div class="input-group-prepend">
+							<div class="input-group-text" id="btnGroupAddon">
+								<i class="material-icons">vpn_key</i>
+							</div>
+						</div>
+						<input type="password" formControlName="password" class="form-control" 
+									placeholder="PASSWORD" aria-label="Input group example" aria-describedby="btnGroupAddon">
+					</div>
+
+			</fieldset>
+		
+				<button type="button" class="btn btn-primary" (click)="login()">
+					LOGIN
+				</button>
+				<br>
+				<hr>
+				<p>
+					<button type="button" class="btn btn-default btn-sm" (click)="signupClick()">
+						SIGN UP
+					</button>
+					&nbsp; | &nbsp;
+					<button type="button" class="btn btn-default btn-sm" (click)="signupClick()">
+						ลืมรหัสผ่าน
+					</button>
+				</p>
+		
+		</form>
+	</div>
+</div>
+
+
+
+
+

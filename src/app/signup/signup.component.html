@@ -1,0 +1,67 @@
+<div id="body">
+  <div id="content">
+    <img src="assets/images/logo.png" width="200px" /><br><br>
+    <form autocomplete="off" novalidate class="login-form" [formGroup]="form">
+      <fieldset>
+
+        <div class="input-group" style="padding-bottom: 10px">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="btnGroupAddon">
+              <i class="material-icons">contact_mail</i>
+            </div>
+          </div>
+          <input type="text" formControlName="email" class="form-control" 
+                placeholder="Email" aria-label="Input group example" aria-describedby="btnGroupAddon">
+        </div>
+        <!--///-->
+        <div class="input-group" style="padding-bottom: 20px">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="btnGroupAddon">
+              <i class="material-icons">vpn_key</i>
+            </div>
+          </div>
+          <input type="password" formControlName="password" class="form-control" 
+                placeholder="Password" aria-label="Input group example" aria-describedby="btnGroupAddon">
+        </div>
+        <!--///-->
+        <div class="input-group" style="padding-bottom: 10px">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="btnGroupAddon">
+              <i class="material-icons">assignment_ind</i>
+            </div>
+          </div>
+          <input type="text" placeholder="Student ID" formControlName="stdId" class="form-control">
+        </div>
+        <!--///-->
+        <!--///-->
+        <div class="input-group" style="padding-bottom: 10px">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="btnGroupAddon">
+              <i class="material-icons">person</i>
+            </div>
+          </div>
+          <input type="text" placeholder="First Name" formControlName="firstName" class="form-control">
+          <input type="text" placeholder="Last Name" formControlName="lastName" class="form-control">
+        </div>
+        <!--///-->
+    
+
+    
+      </fieldset>
+      
+      <button type="button" class="btn btn-primary" (click)="signUp()">Register</button>
+      <br><hr>
+      <p>
+        มีบัญชีผู้ใช้แล้ว
+        <button type="button" class="btn btn-default btn-sm" (click)="gotoLogin()">LOGIN</button>
+      </p>
+      
+    </form>
+  </div>
+</div>
+    
+    
+    
+    
+    
+    
