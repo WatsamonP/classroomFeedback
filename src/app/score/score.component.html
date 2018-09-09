@@ -1,0 +1,51 @@
+<app-header></app-header>
+<div id="body">
+  <div style="padding: 15px"></div>
+  <div class="card" style="width: 84%; left: 8%">
+    <div class="card-header bg-facebook text-light">
+      <b>{{item.course.id}} : {{item.course.name}}</b>
+    </div>
+    <div class="card-body">
+      <div class="text-left">
+        <h5 class="card-title">
+          <i class="fa fa-id-card text-facebook" aria-hidden="true"></i> นักศึกษา
+        </h5>
+        <p>
+          &nbsp;&nbsp;&nbsp;&nbsp; {{item.student.id}} {{item.student.name}}<br> &nbsp;&nbsp;&nbsp;&nbsp; กลุ่มเรียนที่ {{item.student.group}}
+        </p>
+      </div>
+
+      <table class="table text-center">
+        <thead class="bg-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">คะแนน</th>
+            <th scope="col">เปอร์เซนต์</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let score of scoreList; let i = index">
+            <th scope="row"> {{ score.key }}</th>
+            <td><b>{{ score.sumScore }}</b> / {{ score.totalScore }}</td>
+            <td><b>{{ score.studentPercent | number : '1.2-2' }}</b> / {{ score.percentage }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!--div >
+        <div class="row">
+          <div class="col-5 text-left">
+            <b> :</b>
+          </div>
+          <div class="col-7">
+             /
+          </div>
+        </div>
+      </div-->
+    </div>
+
+
+    <div class="card-footer">
+
+    </div>
+  </div>
+</div>

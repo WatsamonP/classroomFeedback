@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  firebase: {
+  feedback: {
     apiKey: "AIzaSyA0FincfVwAgrFIQe2FJjL-rk7JsXpLaZE",
     authDomain: "classroomfeedback-57c36.firebaseapp.com",
     databaseURL: "https://classroomfeedback-57c36.firebaseio.com",

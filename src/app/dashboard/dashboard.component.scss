@@ -1,15 +1,46 @@
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.bg-facebook {
+  background: #3B5998;
+}
+.text-facebook {
+  color: #3B5998;
+}
+
+
 #content {
-    padding: 10px 10px;
+    padding: 5% 5%;
 
     ul {
         list-style-type: none;
-        margin:0;padding:0;
+        margin:0;
+        padding:0;
+
     
         li {
             background: #fff;
             border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
     
             a {
                 font-size: 1.1em;
@@ -22,7 +53,7 @@
                 margin-top: 20px;
                 
                 li {
-                    padding:0;
+                    padding:0px;
     
                     a {
                         font-size: 1em;

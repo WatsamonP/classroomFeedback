@@ -1,0 +1,90 @@
+<app-header></app-header>
+<div id="body">
+  <div style="padding: 15px"></div>
+  <div class="card" style="width: 84%; left: 8%">
+    <div class="card-header bg-facebook text-light">
+      <b>{{item.course.id}} : {{item.course.name}}</b>
+    </div>
+    <div class="card-body">
+      <div class="text-left">
+        <h5 class="card-title">&nbsp;<i class="fa fa-user text-facebook" aria-hidden="true"></i>&nbsp;&nbsp;อาจารย์ : {{item.teacher.data.profile.firstName}}
+          {{item.teacher.data.profile.lastName}}
+        </h5>
+        <h5 class="card-title" style="padding-top:10px">
+          <i class="fa fa-id-card text-facebook" aria-hidden="true"></i> นักศึกษา
+        </h5>
+        <p>
+          &nbsp;&nbsp;&nbsp;&nbsp; {{item.student.id}} {{item.student.name}}<br> &nbsp;&nbsp;&nbsp;&nbsp; กลุ่มเรียนที่ {{item.student.group}}
+        </p>
+      </div>
+
+      <div ngbDropdown class="input-group-append">
+        <button type="button" class="btn bg-facebook btn-light btn-block" (click)="clearContent()" ngbDropdownToggle> {{ dateString }}
+        </button>
+        <div ngbDropdownMenu class="btn-block">
+          <div *ngFor="let key of objectKeys(item.student.attendance)">
+            <div *ngIf="item.student.attendance[key].status!='Missed Class'">
+              <button *ngIf="stdFeedback[key] != undefined" class="dropdown-item btn-sm btn-block disabled" aria-disabled="true">
+                <i class="material-icons text-success" style="font-size: 15px">check_circle_outline</i>
+                {{item.student.attendance[key].date | date:'dd/M/yyyy'}} : ประเมินแล้ว,
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เมื่อ {{stdFeedback[key].date | date:'dd/M/yyyy HH:mm'}}
+              </button>
+              <button *ngIf="stdFeedback[key] == undefined" class="dropdown-item btn-sm btn-block" (click)="onClickSelectedAttendance(item, key)">
+                <i class="material-icons text-warning" style="font-size: 15px">check_circle_outline</i>
+                {{item.student.attendance[key].date | date:'dd/M/yyyy'}} : ยังไม่ประเมิน
+              </button>
+            </div>
+            <button *ngIf="item.student.attendance[key].status=='Missed Class'" class="dropdown-item btn-sm btn-block disabled" aria-disabled="true">
+              <i class="material-icons text-danger" style="font-size: 15px">highlight_off</i>
+              {{item.student.attendance[key].date | date:'dd/M/yyyy'}} : ไม่สามารถประเมินได้
+              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เนื่องจากนักศึกษาขาดเรียน
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="card-footer" *ngIf="feedbackRatingBox">
+
+      <form *ngIf="feedbackCommentBox" autocomplete="off" novalidate class="comment-form" [formGroup]="feedbackForm" style="padding-top: 10px">
+        <textarea formControlName="feedback" class="form-control" rows="4"></textarea><br>
+      </form>
+
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-sm btn-light btn-block">
+            <div class="wrapper" (click)="toggleShow()">
+              <div class="emojis" *ngIf="showEmojis">
+                <span *ngFor="let emoji of emojiList; index as i;">
+                  <img [src]="emojiPath(emoji)" width='65px' (click)="onClickReactFeel(i)">
+                </span>
+              </div>
+              <span *ngIf="!isReactFeeling" style="font-size:16px">
+                <img [src]="emojiPath('fb-like')" width='45px'> How FEEL
+              </span>
+              <span *ngIf="isReactFeeling">
+                <img [src]="emojiPath(emojiList[reactFeelingIndex])" width='30px'> รู้สึก {{ reactFeeling }}
+              </span>
+            </div>
+          </button>
+        </div>
+
+        <div class="col">
+          <button *ngIf="!feedbackCommentBox" type="button" class="btn btn-light btn-block" (click)="onClickReachFeedback()">
+            <div class="wrapper" style="font-size:16px">
+              <img [src]="emojiPath('fb-comment')" width='45px'>&nbsp;FFEDBACK
+            </div>
+          </button>
+
+          <button *ngIf="feedbackCommentBox" type="button" class="btn btn-light btn-block" [disabled]="!feedbackForm.valid"
+            (click)="onClickSave()">
+            <div class="wrapper" style="font-size:16px">
+              <img [src]="emojiPath('send')" style="fill:#3B5998" width='45px'>&nbsp;SEND
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

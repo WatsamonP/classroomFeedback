@@ -1,0 +1,50 @@
+<app-header></app-header>
+
+<div id="body">
+  <div id="container">
+    <div id="content">
+      <div *ngIf="isLoader" class="loader"></div>
+      <div *ngIf="!isLoader">
+        <!--ไม่เจอ------------------------------------------------------------>
+        <div *ngIf="isNotFound">
+          <h4 class="text-danger">ไม่พบรายวิชาที่นักศึกษาลงทะเบียน</h4>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <p style="display:inline">
+            <i class="material-icons">contact_support</i>
+            สาเหตุอาจเกิดจาก อาจารย์ประจำรายวิชาไม่ได้ใช้ระบบ Class Attendance หรือรายวิชายังไม่มีการเช็คชื่อ</p>
+          <p class="text-secondary" style="display:inline">&nbsp;&nbsp;ให้นักศึกษาติดต่ออาจารย์ประจำรายวิชา</p>
+        </div>
+        <!--เจอ------------------------------------------------------------>
+        <div *ngIf="!isNotFound">
+          <h4 class="text-primary">รายวิชาที่ลงทะเบียน</h4>
+          <ul>
+            <li *ngFor="let item of studentlist; let i = index;">
+              <a>
+                <div class="row" (click)="selectedCourse(i)">
+                  <div class="col">
+                    {{ item.course.id }} : {{ item.course.name }}
+                  </div>
+                </div>
+              </a>
+              <div class="row" (click)="selectedCourse(i)">
+                <div class="col">อาจารย์ : {{ item.teacher.data.profile.firstName }} {{ item.teacher.data.profile.lastName
+                  }}
+                </div>
+              </div>
+              <div class="row" (click)="selectedCourse(i)">
+                <div class="col">กลุ่มที่ลงทะเบียน {{ item.student.group }} </div>
+              </div>
+              <ul *ngIf="isClick && isClickIndex == i">
+                <div class="form-group text-center">
+                  <button type="button" class="btn btn-primary" (click)="onClickCheckScore(item)">ตรวจสอบคะแนน</button>
+                    &nbsp;&nbsp;&nbsp;
+                  <button type="button" class="btn btn-primary" (click)="onClickFeedback(item)">ประเมินการสอน</button>
+                </div>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,107 @@
+<app-header></app-header>
+
+<div id="body">
+<div id="container">
+  <div id="content">
+    <!--ul>
+      <li><strong>Student ID:</strong> {{ (item | async )?.stdId }}</li>
+      <!li><strong>Email:</strong> {{ (item | async )?.firstName  }}</li>
+      <li><strong>Name:</strong> {{ (item | async )?.firstName  }} {{ (item | async )?.lastName }}</li>
+    </ul-->
+    
+    <!--div style="text-decoration-color: brown">* ความคิดเห็นของนักศึกษาจะไม่ถูกเปิดเผยตัวตน</div-->
+    <div *ngIf="!foundCourse">
+      <h5 class="text-danger">ไม่พบรายวิชาที่นักศึกษาลงทะเบียน</h5>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <p style="display:inline">
+        <i class="material-icons">contact_support</i>
+        สาเหตุอาจเกิดจาก อาจารย์ประจำรายวิชาไม่ได้ใช้ระบบ Class Attendance หรือรายวิชายังไม่มีการเช็คชื่อ</p>
+      <p class="text-secondary" style="display:inline">&nbsp;&nbsp;ให้นักศึกษาติดต่ออาจารย์ประจำรายวิชา</p>
+
+    </div>
+    <div *ngIf="foundCourse" style="padding-bottom: 10px">
+      <h5 class="text-primary">รายวิชาที่นักศึกษาลงทะเบียน
+        <i class="material-icons text-danger" (click)="pushPageManual()">contact_support</i><br>
+      </h5>
+      <!--p style="display:inline">คลิกที่ชื่อวิชา เพื่อทำการประเมินการสอน</p>&nbsp;
+      <i class="material-icons text-danger" (click)="pushPageManual()">contact_support</i><br>
+      <p *ngIf="showDetail" class="text-danger" style="display:inline">
+        ผลการประเมินจะถูกส่งไปเพื่อแก้ไขปัญหาการเรียนการสอน โดยจะไม่เปิดเผยตัวตนของนักศึกษา</p-->        
+    </div>
+
+    <ul>
+      <li *ngFor="let x of studentCourse">
+        <a>
+          <div class="row" (click)="selectedCourse(x)">
+            <div class="col">
+              {{ x.cId }} : {{ x.cName }}
+            </div>
+          </div>     
+        </a>
+        <div class="row" (click)="selectedCourse(x)">
+          <div class="col">กลุ่มที่ลงทะเบียน {{ x.cGroup }}</div>
+        </div> 
+        <div class="row" (click)="selectedCourse(x)">
+          <div class="col">อาจารย์ : {{ x.cTeacher }}</div>
+        </div> 
+
+        <ul *ngIf="x.isClick">
+          <!--li>{{ x.name }}</li>
+          <li><a href="/">{{ x.name }}</a></li-->
+          <div class="form-group">
+       
+            <div ngbDropdown class="input-group-append">
+              <button type="button" class="btn btn-outline-secondary btn-sm btn-block" ngbDropdownToggle>{{x.selectedAttendance}}</button>
+              <div ngbDropdownMenu class="btn-block">
+                <div *ngFor="let key of objectKeys(x.attendance)">
+                  <div *ngIf="x.attendance[key].status!='Missed Class'">
+                    <button *ngIf="stdFeedback[key] != undefined" 
+                      class="dropdown-item btn-sm btn-block disabled" aria-disabled="true">
+                      <i class="material-icons text-success" style="font-size: 15px">check_circle_outline</i>
+                      {{x.couseAttendance.attendance[key].date | date:'dd/M/yyyy'}} : ประเมินแล้ว, 
+                      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      เมื่อ {{stdFeedback[key].date | date:'dd/M/yyyy HH:mm'}}
+                    </button>
+                    <button *ngIf="stdFeedback[key] == undefined" 
+                      class="dropdown-item btn-sm btn-block" (click)="onClickSelectedAttendance(x, x.couseAttendance.attendance[key].date, key)">
+                      <i class="material-icons text-warning" style="font-size: 15px">check_circle_outline</i>
+                      {{x.couseAttendance.attendance[key].date | date:'dd/M/yyyy'}} : ยังไม่ประเมิน
+                    </button>
+                  </div>
+                  <button *ngIf="x.attendance[key].status=='Missed Class'" 
+                    class="dropdown-item btn-sm btn-block disabled" aria-disabled="true">
+                    <i class="material-icons text-danger" style="font-size: 15px">highlight_off</i>
+                    {{x.couseAttendance.attendance[key].date | date:'dd/M/yyyy'}} : ไม่สามารถประเมินได้
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    เนื่องจากนักศึกษาขาดเรียน 
+                  </button>
+                </div>
+                
+              </div>
+            </div>  
+            <div class="row">
+              <!--div class="col"><label for="comment">ประเมินการสอน : </label></div-->
+              <div class="col" style="text-align: center; padding-top: 10px" *ngIf="x.isClick2">
+                <img [src]="imgSrc1" (click)="onMouseClickRate(1,x)" width="22px" />&nbsp;
+                <img [src]="imgSrc2" (click)="onMouseClickRate(2,x)" width="22px" />&nbsp;
+                <img [src]="imgSrc3" (click)="onMouseClickRate(3,x)" width="22px" />&nbsp;
+                <img [src]="imgSrc4" (click)="onMouseClickRate(4,x)" width="22px" />&nbsp;
+                <img [src]="imgSrc5" (click)="onMouseClickRate(5,x)" width="22px" />
+              </div>  
+            </div>
+    
+            <form autocomplete="off" novalidate class="comment-form" [formGroup]="form" style="padding-top: 10px">
+              <textarea *ngIf="x.isClick3" formControlName="comment" class="form-control" rows="4"></textarea>
+            </form>
+          </div>
+          <div *ngIf="x.isClick3" style="text-align: right">
+            <button type="button" class="btn btn-primary" (click)="onClickSave(x.cId)">บันทึกแบบประเมิน</button>
+          </div>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+</div>
+
+

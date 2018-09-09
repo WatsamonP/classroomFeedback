@@ -1,0 +1,182 @@
+<app-header></app-header>
+<div id="body">
+  <div style="padding: 15px"></div>
+  <div class="card" style="width: 84%; left: 8%">
+    <!--div class="card-img-top"> Hello World </div-->
+    <!--img class="card-img-top" src="..." alt="Card image cap"-->
+    <div class="card-header bg-facebook text-light">
+      <b>{{item.course.id}} : {{item.course.name}}</b>
+    </div>
+    <div class="card-body">
+      <div class="text-left">
+        <h5 class="card-title">&nbsp;<i class="fa fa-user text-facebook" aria-hidden="true"></i>&nbsp;&nbsp;อาจารย์ : {{item.teacher.data.profile.firstName}}
+          {{item.teacher.data.profile.lastName}}
+        </h5>
+        <h5 class="card-title" style="padding-top:10px">
+          <i class="fa fa-id-card text-facebook" aria-hidden="true"></i> นักศึกษา
+        </h5>
+        <p>
+          &nbsp;&nbsp;&nbsp;&nbsp; {{item.student.id}} {{item.student.name}}<br> &nbsp;&nbsp;&nbsp;&nbsp; กลุ่มเรียนที่ {{item.student.group}}
+        </p>
+      </div>
+    </div>
+    <!--div class="card-footer">
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-sm btn-light btn-block">
+            <img [src]="emojiPath('fb-like')" width='35px'> FEELING
+          </button>
+        </div>
+        <div class="col">
+          <button type="button" class="btn btn-sm btn-light btn-block">
+            <img [src]="emojiPath('fb-comment')" width='35px'> FFEDBACK
+          </button>
+        </div>
+      </div>
+    </div-->
+    <div class="card-footer">
+      <div ngbDropdown class="input-group-append">
+        <button type="button" class="btn btn-outline-secondary btn-sm btn-block" (click)="clearContent()" ngbDropdownToggle>Hello
+          World
+        </button>
+        <div ngbDropdownMenu class="btn-block">
+          <div *ngFor="let key of objectKeys(item.student.attendance)">
+            <div *ngIf="item.student.attendance[key].status!='Missed Class'">
+              <button *ngIf="stdFeedback[key] != undefined" class="dropdown-item btn-sm btn-block disabled" aria-disabled="true">
+                <i class="material-icons text-success" style="font-size: 15px">check_circle_outline</i>
+                {{item.student.attendance[key].date | date:'dd/M/yyyy'}} : ประเมินแล้ว,
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เมื่อ {{stdFeedback[key].date | date:'dd/M/yyyy HH:mm'}}
+              </button>
+              <button *ngIf="stdFeedback[key] == undefined" class="dropdown-item btn-sm btn-block" (click)="onClickSelectedAttendance(item, item.student.attendance[key].date, key)">
+                <i class="material-icons text-warning" style="font-size: 15px">check_circle_outline</i>
+                {{item.student.attendance[key].date | date:'dd/M/yyyy'}} : ยังไม่ประเมิน
+              </button>
+            </div>
+            <button *ngIf="item.student.attendance[key].status=='Missed Class'" class="dropdown-item btn-sm btn-block disabled" aria-disabled="true">
+              <i class="material-icons text-danger" style="font-size: 15px">highlight_off</i>
+              {{item.student.attendance[key].date | date:'dd/M/yyyy'}} : ไม่สามารถประเมินได้
+              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เนื่องจากนักศึกษาขาดเรียน
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--reaction [itemId]="item.$key"></reaction-->
+    <!--div class="wrapper bg-danger" (mouseenter)="toggleShow(true)" (mouseleave)="toggleShow(false)"-->
+    <ul>
+      <li>
+        <a>
+          <div class="row">
+            <div class="col">
+              {{item.course.id}} : {{item.course.name}}
+            </div>
+          </div>
+        </a>
+        <div class="row">
+          <div class="col">อาจารย์ : {{item.teacher.data.profile.firstName}} {{item.teacher.data.profile.lastName}}</div>
+        </div>
+        <div class="row" style="padding-top:15px">
+          <div class="col">
+            ผู้ประเมินการสอน<br> {{item.student.id}} {{item.student.name}}<br> กลุ่มที่ {{item.student.group}}
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div>
+
+    </div>
+    <ul>
+      <li>
+        <div class="form-group">
+          <div ngbDropdown class="input-group-append">
+            <button type="button" class="btn btn-outline-secondary btn-sm btn-block" (click)="clearContent()" ngbDropdownToggle>Hello
+              World
+            </button>
+            <div ngbDropdownMenu class="btn-block">
+              <div *ngFor="let key of objectKeys(item.student.attendance)">
+                <div *ngIf="item.student.attendance[key].status!='Missed Class'">
+                  <button *ngIf="stdFeedback[key] != undefined" class="dropdown-item btn-sm btn-block disabled" aria-disabled="true">
+                    <i class="material-icons text-success" style="font-size: 15px">check_circle_outline</i>
+                    {{item.student.attendance[key].date | date:'dd/M/yyyy'}} : ประเมินแล้ว,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เมื่อ {{stdFeedback[key].date | date:'dd/M/yyyy HH:mm'}}
+                  </button>
+                  <button *ngIf="stdFeedback[key] == undefined" class="dropdown-item btn-sm btn-block" (click)="onClickSelectedAttendance(item, item.student.attendance[key].date, key)">
+                    <i class="material-icons text-warning" style="font-size: 15px">check_circle_outline</i>
+                    {{item.student.attendance[key].date | date:'dd/M/yyyy'}} : ยังไม่ประเมิน
+                  </button>
+                </div>
+                <button *ngIf="item.student.attendance[key].status=='Missed Class'" class="dropdown-item btn-sm btn-block disabled" aria-disabled="true">
+                  <i class="material-icons text-danger" style="font-size: 15px">highlight_off</i>
+                  {{item.student.attendance[key].date | date:'dd/M/yyyy'}} : ไม่สามารถประเมินได้
+                  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เนื่องจากนักศึกษาขาดเรียน
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf="feedbackRatingBox" class="row" style="padding-top:30px">
+            <div class="col text-center">
+
+              <span *ngFor="let emoji of emojiList; index as i;">
+                <img [src]="emojiPath(emoji)" *ngIf="hoverIndex!==i" (mouseenter)="toggleShow(true,i)" (mouseleave)="toggleShow(false,i)"
+                  width='35px' (click)="react(i)">
+                <img [src]="emojiPath(emoji)" *ngIf="hoverIndex==i" width='75px' (click)="react(i)">
+              </span>
+
+
+              <!--span *ngFor="let emoji of emojiList; index as i;">
+                
+                <img [src]="emojiPath(emoji)" width='35px' (click)="react(i)">
+                <img *ngIf="hasReactions(i)" [src]="emojiPath(emoji)" width='70px' (click)="react(i)">
+              </span-->
+            </div>
+          </div>
+          <div *ngIf="feedbackRatingBox" class="row" style="padding-top:10px">
+            <div class="col text-center">
+              <span>
+                You reacted <strong>{{ clickIndex }}</strong>
+              </span>
+            </div>
+          </div>
+
+
+
+
+
+          <!--div class="row wrapper bg-danger" (click)="toggleShow()">
+            <div class="emojis" *ngIf="showEmojis">
+              <span *ngFor="let emoji of emojiList; index as i;">
+                <img [src]="emojiPath(emoji)" width='75px' (click)="react(i)">
+              </span>
+            </div>
+            <span class="love" (click)="react(0)" [class.liked]="userReaction != null">
+              FEELING
+            </span>
+            <span *ngIf="userReaction != null">
+              | You reacted <strong>{{ emojiList[userReaction] }}</strong>
+            </span>
+            <div class="reactions">
+              <div *ngFor="let emoji of emojiList; index as i;">
+                <span *ngIf="hasReactions(i)">
+                  <img [src]="emojiPath(emoji)">
+                </span>
+              </div>
+            </div>
+          </div-->
+
+
+
+
+          <form *ngIf="feedbackCommentBox" autocomplete="off" novalidate class="comment-form" [formGroup]="feedbackForm" style="padding-top: 10px">
+            <textarea formControlName="feedback" class="form-control" rows="4"></textarea><br>
+            <div style="text-align: right">
+              <button type="button" class="btn btn-primary" [disabled]="!feedbackForm.valid" (click)="onClickSave()">บันทึกแบบประเมิน</button>
+            </div>
+          </form>
+
+        </div>
+      </li>
+    </ul>
+  </div>

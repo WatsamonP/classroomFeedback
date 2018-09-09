@@ -1,0 +1,73 @@
+<app-header></app-header>
+<div id="body">
+  <div id="content">
+    <ul>
+      <li>
+        <a>
+          <div class="row">
+            <div class="col">
+              {{item.course.id}} : {{item.course.name}}
+            </div>
+          </div>
+        </a>
+        <div class="row">
+          <div class="col">อาจารย์ : {{item.teacher.data.profile.firstName}} {{item.teacher.data.profile.lastName}}</div>
+        </div>
+        <div class="row" style="padding-top:15px">
+          <div class="col">
+            ผู้ประเมินการสอน<br> {{item.student.id}} {{item.student.name}}<br> กลุ่มที่ {{item.student.group}}
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div>
+
+    </div>
+    <ul>
+      <li>
+        <div class="form-group">
+          <div ngbDropdown class="input-group-append">
+            <button type="button" class="btn btn-outline-secondary btn-sm btn-block" ngbDropdownToggle>Hello World</button>
+            <div ngbDropdownMenu class="btn-block">
+              <div *ngFor="let key of objectKeys(item.student.attendance)">
+                <div *ngIf="item.student.attendance[key].status!='Missed Class'">
+                  <button *ngIf="stdFeedback[key] != undefined" class="dropdown-item btn-sm btn-block disabled" aria-disabled="true">
+                    <i class="material-icons text-success" style="font-size: 15px">check_circle_outline</i>
+                    {{item.student.attendance[key].date | date:'dd/M/yyyy'}} : ประเมินแล้ว,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เมื่อ {{stdFeedback[key].date | date:'dd/M/yyyy HH:mm'}}
+                  </button>
+                  <button *ngIf="stdFeedback[key] == undefined" class="dropdown-item btn-sm btn-block" (click)="onClickSelectedAttendance(item, item.student.attendance[key].date, key)">
+                    <i class="material-icons text-warning" style="font-size: 15px">check_circle_outline</i>
+                    {{item.student.attendance[key].date | date:'dd/M/yyyy'}} : ยังไม่ประเมิน
+                  </button>
+                </div>
+                <button *ngIf="item.student.attendance[key].status=='Missed Class'" class="dropdown-item btn-sm btn-block disabled" aria-disabled="true">
+                  <i class="material-icons text-danger" style="font-size: 15px">highlight_off</i>
+                  {{item.student.attendance[key].date | date:'dd/M/yyyy'}} : ไม่สามารถประเมินได้
+                  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; เนื่องจากนักศึกษาขาดเรียน
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="feedbackRatingBox">
+            <div class="col" style="text-align: center; padding-top: 10px">
+              <img [src]="imgSrc1" (click)="onClickRating(1,item)" width="22px" />&nbsp;
+              <img [src]="imgSrc2" (click)="onClickRating(2,item)" width="22px" />&nbsp;
+              <img [src]="imgSrc3" (click)="onClickRating(3,item)" width="22px" />&nbsp;
+              <img [src]="imgSrc4" (click)="onClickRating(4,item)" width="22px" />&nbsp;
+              <img [src]="imgSrc5" (click)="onClickRating(5,item)" width="22px" />
+            </div>
+          </div>
+
+          <form *ngIf="feedbackCommentBox" autocomplete="off" novalidate class="comment-form" [formGroup]="feedbackForm" style="padding-top: 10px">
+            <textarea formControlName="feedback" class="form-control" rows="4"></textarea><br>
+            <div style="text-align: right">
+              <button type="button" class="btn btn-primary" [disabled]="!feedbackForm.valid" (click)="onClickSave()">บันทึกแบบประเมิน</button>
+            </div>
+          </form>
+
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

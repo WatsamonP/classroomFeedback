@@ -1,24 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Http } from '@angular/http';
+import { BehaviorSubject } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DataService {
-  testId: string = 'B5800018';
-  stdId: string = '';
-  found: boolean;
-  myData: any[];
 
-  constructor(private httpClient: HttpClient, private http: Http){}
+  private messageSource = new BehaviorSubject('default message');
+  currentMessage = this.messageSource.asObservable();
 
-  fetchData(){
-    //return this.http.get('https://classattendence-c4e10.firebaseio.com/users/.json').map(res:Response) => res.json().data);
-    return this.httpClient.get('https://classattendence-c4e10.firebaseio.com/users/.json')
+  constructor() { }
+
+  changeMessage(message: string) {
+    this.messageSource.next(message)
   }
 
-  fetchFeedback(){
-    return this.httpClient.get('https://classroomfeedback-57c36.firebaseio.com/.json')
-  }
 }

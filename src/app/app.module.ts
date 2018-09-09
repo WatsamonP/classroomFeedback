@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { Http, HttpModule} from '@angular/http'
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 //
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +27,14 @@ import { AngularFireAuthModule } from "angularfire2/auth";
 import { UserService } from './shared/services/user/user.service';
 import { HeaderComponent } from './header/header.component';
 import { ManualComponent } from './manual/manual.component';
+import { LayoutComponent } from './layout/layout.component';
+import { ScoreComponent } from './score/score.component';
+import { QrCodeComponent } from './qr-code/qr-code.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { CourseService } from './shared/services/course/course.service'
+import { MessageService } from './shared/services/messageService'
+import { DataService } from './shared/services/data/data.service'
+import { ReactionService } from './shared/services/reaction/reaction.service'
 
 @NgModule({
   declarations: [
@@ -35,22 +44,28 @@ import { ManualComponent } from './manual/manual.component';
     SigninComponent,
     DashboardComponent,
     HeaderComponent,
-    ManualComponent
+    ManualComponent,
+    LayoutComponent,
+    ScoreComponent,
+    QrCodeComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.feedback),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     ReactiveFormsModule,
+    FormsModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
     HttpClientModule,
     HttpModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    NgbDropdownModule.forRoot(),
   ],
-  providers: [AuthService, AuthGuard, UserService, AngularFireDatabase],
+  providers: [AuthService, AuthGuard, UserService, AngularFireDatabase, CourseService, DataService,ReactionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
