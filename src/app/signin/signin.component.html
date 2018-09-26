@@ -1,6 +1,6 @@
 <div id="body">
   <div id="content">
-    <img src="assets/images/logo.png" width="200px" /><br><br>
+    <img src="assets/images/logo.png" width="180px" /><br><br>
     <form autocomplete="off" novalidate class="login-form" [formGroup]="form">
       <fieldset>
         <div class="input-group" style="padding-bottom: 10px">
@@ -24,24 +24,63 @@
 
       </fieldset>
 
-      <button type="button" class="btn btn-primary" (click)="login()">
-        LOGIN
+      <button type="button" class="btn btn-primary btn-sm btn-block" (click)="login()">
+        SIGN IN
       </button>
-      <br><br>
-     
-      <p>
-        <button type="button" class="btn btn-default btn-sm" (click)="signupClick()">
-          SIGN UP
-        </button>
-        &nbsp; | &nbsp;
-        <button type="button" class="btn btn-default btn-sm" (click)="signupClick()">
-          ลืมรหัสผ่าน
-        </button>
-      </p>
+
+      <div style="padding:10px"></div>
+
+      <div class="row">
+        <div class="col">
+          <button type="button" style="font-size:12px" class="btn btn-light btn-sm btn-block" (click)="signupClick()">
+            RESGISTER
+          </button>
+        </div>
+        <div class="col">
+          <button type="button" style="font-size:12px" class="btn btn-light btn-sm btn-block" (click)="signupClick()">
+            Forgot Password ?
+          </button>
+        </div>
+      </div>
+
+      <div style="padding:10px"></div>
+
+
+      <!--button disabled type="button" class="btn bg-facebook btn-sm btn-block" (click)="onClickFacebook()">
+        <i class="fa fa-facebook" aria-hidden="true"></i>&nbsp;
+        FACEBOOK
+      </button>
+
+      <button type="button" class="btn bg-google btn-sm btn-block" (click)="onClickGoogle()">
+        <i class="fa fa-google-plus" aria-hidden="true"></i>&nbsp;
+        GOOGLE
+      </button-->
+
+      <button disabled type="button" class="btn bg-facebook btn-circle text-light">
+        <i class="fa fa-facebook" aria-hidden="true"></i>
+      </button>
+      &nbsp;&nbsp;
+      <button type="button" class="btn bg-google btn-circle text-light">
+        <i class="fa fa-google-plus" aria-hidden="true"></i>
+      </button>
+
+
+      <!--a disabled href="#aboutModal" data-toggle="modal" data-target="#myModal" class="btn btn-circle bg-facebook text-light">
+        <i class="fa fa-facebook" aria-hidden="true"></i>
+      </a>
+      &nbsp;&nbsp;
+      <a href="#aboutModal" data-toggle="modal" data-target="#myModal" class="btn btn-circle bg-google text-light">
+        <i class="fa fa-google-plus" aria-hidden="true"></i>
+      </a-->
+
+
+      
+
+
       <hr>
       <p>
-        <button type="button" class="btn btn-warning" (click)="onClickQrCode()">
-          พิมพ์ QR-Code
+        <button type="button" class="btn btn-warning btn-sm btn-block" (click)="onClickQrCode()">
+          QR-Code
         </button>
       </p>
 

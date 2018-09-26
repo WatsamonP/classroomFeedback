@@ -2,7 +2,7 @@
   position: relative;
   //padding: 20px;
   img {
-    width: 40px;
+    width: 35px;
     cursor: pointer;
     transition: transform 250ms ease;
 
@@ -93,4 +93,49 @@
           }
       }
   }
+}
+
+.star {
+  font-size: 1.5rem;
+  color: #b0c4de;
+}
+.filled {
+  color: #1e90ff;
+}
+.bad {
+  color: #deb0b0;
+}
+.filled.bad {
+  color: #ff1e1e;
+}
+
+.one {
+  color: #deb0b0;
+}
+.two {
+  color: #dbbda6;
+}
+.three {
+  color: #dfdea7;
+}
+.four {
+  color: #bdd89f;
+}
+.five {
+  color: #b5dda3;
+}
+.filled.one {
+  color: #ff1e1e;
+}
+.filled.two {
+  color: #ff831e;
+}
+.filled.three {
+  color: #fffb1e;
+}
+.filled.four {
+  color: #6ec40d;
+}
+.filled.five {
+  color: #257500;
 }

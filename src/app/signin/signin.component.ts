@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Validators, FormGroup, FormBuilder } from "@angular/forms";
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Validators, FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { AuthService } from "../shared/services/auth.service";
 import { Router } from "@angular/router";
 import { ToastrService } from 'ngx-toastr';
+import { NgbModal, ModalDismissReasons, NgbAlert, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-signin',
@@ -10,46 +11,73 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./signin.component.scss']
 })
 export class SigninComponent implements OnInit {
-  
-  form:FormGroup;
+  @ViewChild('socialLogin')
+  private socialLogin: TemplateRef<any>;
+
+  form: FormGroup;
+  signUpForm: FormGroup;
+
 
   constructor(
-    private fb:FormBuilder, 
+    private fb: FormBuilder,
     private authService: AuthService,
-    private router:Router,
-    private toastr: ToastrService
-  ){
+    private router: Router,
+    private toastr: ToastrService,
+    private modalService: NgbModal,
+
+  ) {
+
+    let emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
     this.form = this.fb.group({
-      email: ['',Validators.required],
-      password: ['',Validators.required]
-  });
+      email: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(emailPattern)
+      ]),
+      password: new FormControl(null, [
+        Validators.required
+      ]),
+    });
+  }
+
+  get email() {
+    return this.form.get('email');
+  }
+  get password() {
+    return this.form.get('password');
   }
 
   ngOnInit() {
   }
 
   login() {
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       console.log("กรุณากรอกข้อมูลให้ครบ");
       return;
     }
 
-    const formValue = this.form.value;
-    this.authService.login(formValue.email, formValue.password)
-      .subscribe(() => {
-        this.toastr.success(formValue.email+' เข้าสู่ระบบสำเร็จ'),
-        this.router.navigate(['/'])
-      },
-        err => this.toastr.error(err)
-      );
+    const val = this.form.value;
+    this.authService.emailLogin(val.email, val.password);
+    localStorage.setItem('isLoggedin', 'true');
   }
 
-  signupClick(){
+  onClickFacebook() {
+    this.authService.facebookLogin();
+  }
+
+  onClickGoogle() {
+    this.authService.googleLogin();
+  }
+
+  signupClick() {
     this.router.navigate(['/signup']);
   }
 
-  onClickQrCode(){
+  onClickQrCode() {
     this.router.navigate(['/qrcode']);
+  }
+
+  public open(content) {
+    this.modalService.open(content, { centered: true });
   }
 
 }

@@ -1,25 +1,53 @@
-<app-header></app-header>
+<nav class="navbar navbar-dark bg-dark">
+  <div>
+    <button type="button" class="btn btn-dark" (click)="pushpage('dashboard')">
+      <i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp;BACK
+    </button>
+  </div>
+
+  <div id="navbarSupportedContent">
+    <button type="button" class="btn btn-dark" (click)="pushpage('score')">
+      SCORE&nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
+    </button>
+  </div>
+</nav>
+
+
 <div id="body">
-  <div style="padding: 15px"></div>
-  <div class="card" style="width: 84%; left: 8%">
+  <div style="padding: 10px"></div>
+  <div class="card" style="width: 90%; left: 5%">
     <div class="card-header bg-facebook text-light">
       <b>{{item.course.id}} : {{item.course.name}}</b>
     </div>
     <div class="card-body">
       <div class="text-left">
-        <h5 class="card-title">&nbsp;<i class="fa fa-user text-facebook" aria-hidden="true"></i>&nbsp;&nbsp;อาจารย์ : {{item.teacher.data.profile.firstName}}
-          {{item.teacher.data.profile.lastName}}
-        </h5>
-        <h5 class="card-title" style="padding-top:10px">
-          <i class="fa fa-id-card text-facebook" aria-hidden="true"></i> นักศึกษา
-        </h5>
-        <p>
-          &nbsp;&nbsp;&nbsp;&nbsp; {{item.student.id}} {{item.student.name}}<br> &nbsp;&nbsp;&nbsp;&nbsp; กลุ่มเรียนที่ {{item.student.group}}
-        </p>
+        <i class="fa fa-user text-facebook" aria-hidden="true"></i>&nbsp;&nbsp;อาจารย์ประจำรายวิชา<br>
+        <B style="padding-left:20px">{{item.teacher.data.profile.firstName}} {{item.teacher.data.profile.lastName}}</B>
+      </div>
+      <div class="text-left" style="padding-top:10px ;padding-bottom:10px">
+        <i class="fa fa-id-card text-facebook" aria-hidden="true"></i>&nbsp;<b>{{item.student.id}}</b>
+        <div style="padding-left:20px">{{item.student.name}}</div>
+        <div style="padding-left:20px">กลุ่ม : {{item.student.group}}</div>
       </div>
 
+
+
+      <!--div class="text-left">
+        <h6 class="card-title">&nbsp;<i class="fa fa-user text-facebook" aria-hidden="true"></i>&nbsp;&nbsp;อาจารย์ : {{item.teacher.data.profile.firstName}}
+          {{item.teacher.data.profile.lastName}}
+        </h6>
+        <h6 class="card-title" style="padding-top:10px">
+          <i class="fa fa-id-card text-facebook" aria-hidden="true"></i> นักศึกษา
+        </h6>
+        <p>
+          {{item.student.id}}<br> {{item.student.name}}<br>
+          กลุ่มเรียนที่ {{item.student.group}}
+        </p>
+      </div-->
+
       <div ngbDropdown class="input-group-append">
-        <button type="button" class="btn bg-facebook btn-light btn-block" (click)="clearContent()" ngbDropdownToggle> {{ dateString }}
+        <button type="button" class="btn bg-facebook btn-light text-light btn-block" (click)="clearContent()" ngbDropdownToggle>
+          {{ dateString }}
         </button>
         <div ngbDropdownMenu class="btn-block">
           <div *ngFor="let key of objectKeys(item.student.attendance)">
@@ -47,12 +75,41 @@
 
     <div class="card-footer" *ngIf="feedbackRatingBox">
 
-      <form *ngIf="feedbackCommentBox" autocomplete="off" novalidate class="comment-form" [formGroup]="feedbackForm" style="padding-top: 10px">
-        <textarea formControlName="feedback" class="form-control" rows="4"></textarea><br>
-      </form>
+      <div *ngIf="feedbackCommentBox">
+        <table class="table text-center">
+          <thead class="bg-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">รายการ</th>
+              <th scope="col">ความพึงพอใจ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let rate of ratingList; let i = index">
+              <td scope="row">{{ rate.index }}</td>
+              <td scope="row" style="text-align: left"> {{ rate.topic }}</td>
+              <td scope="row">
+                <ngb-rating [(rate)]="rate.currentRate">
+                  <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.filled]="fill === 100" [class.one]="index == 0" [class.two]="index == 1" [class.three]="index == 2"
+                      [class.four]="index == 3" [class.five]="index == 4">&#9733;</span>
+                  </ng-template>
+                </ngb-rating>
+                <!--pre>Rate: <b>{{currentRate}}</b></pre-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <form *ngIf="feedbackCommentBox" autocomplete="off" novalidate class="comment-form" [formGroup]="feedbackForm" style="padding-top: 10px">
+          <textarea formControlName="feedback" class="form-control" rows="4"></textarea><br>
+        </form>
+      </div>
 
       <div class="row">
-        <div class="col">
+        <div class="col-6">
           <button type="button" class="btn btn-sm btn-light btn-block">
             <div class="wrapper" (click)="toggleShow()">
               <div class="emojis" *ngIf="showEmojis">
@@ -60,31 +117,34 @@
                   <img [src]="emojiPath(emoji)" width='65px' (click)="onClickReactFeel(i)">
                 </span>
               </div>
-              <span *ngIf="!isReactFeeling" style="font-size:16px">
-                <img [src]="emojiPath('fb-like')" width='45px'> How FEEL
+              <span *ngIf="!isReactFeeling">
+                <img [src]="emojiPath('fb-like')" width='45px'> FEEL ?
               </span>
               <span *ngIf="isReactFeeling">
-                <img [src]="emojiPath(emojiList[reactFeelingIndex])" width='30px'> รู้สึก {{ reactFeeling }}
+                <img [src]="emojiPath(emojiList[reactFeelingIndex])"> รู้สึก{{ reactFeeling }}
               </span>
             </div>
           </button>
         </div>
 
-        <div class="col">
+        <div class="col-6">
           <button *ngIf="!feedbackCommentBox" type="button" class="btn btn-light btn-block" (click)="onClickReachFeedback()">
-            <div class="wrapper" style="font-size:16px">
+            <span class="wrapper">
               <img [src]="emojiPath('fb-comment')" width='45px'>&nbsp;FFEDBACK
-            </div>
+            </span>
           </button>
 
-          <button *ngIf="feedbackCommentBox" type="button" class="btn btn-light btn-block" [disabled]="!feedbackForm.valid"
-            (click)="onClickSave()">
-            <div class="wrapper" style="font-size:16px">
-              <img [src]="emojiPath('send')" style="fill:#3B5998" width='45px'>&nbsp;SEND
-            </div>
+          <button *ngIf="feedbackCommentBox" type="button" class="btn btn-light btn-block" [disabled]="!feedbackForm.valid" (click)="onClickSave()">
+            <span *ngIf="!feedbackForm.valid" class="wrapper">
+              <img [src]="emojiPath('send')" width='45px'>&nbsp;SEND
+            </span>
+            <span *ngIf="feedbackForm.valid" class="wrapper text-facebook">
+              <img [src]="emojiPathPng('send-facebook')" width='45px'>&nbsp;SEND
+            </span>
           </button>
         </div>
       </div>
+
     </div>
   </div>
 </div>

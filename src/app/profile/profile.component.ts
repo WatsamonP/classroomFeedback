@@ -6,11 +6,11 @@ import { Router } from "@angular/router";
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class ProfileComponent implements OnInit {
 
   form: FormGroup;
 
@@ -21,34 +21,48 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService
   ) {
+    
+    var str = this.authService.currentUserDisplayName;
+    var stringArray = str.split(' ');
+    let fName = stringArray[0];
+    let lName = stringArray[1];
     let emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
+    if(fName == " " || fName == ""){
+      fName = null
+    }
+    if(lName == " " || lName == ""){
+      lName = null
+    }
+
     this.form = this.fb.group({
-      email: new FormControl(null, [
+      email: new FormControl(this.authService.currentUserEmail, [
         Validators.required,
         Validators.pattern(emailPattern)
-      ]),
-      password: new FormControl(null, [
-        Validators.required
       ]),
       stdId: new FormControl(null, [
         Validators.required,
         Validators.pattern("[B|M|D]\\d{7}")
       ]),
-      firstName: new FormControl(null, [
+      firstName: new FormControl(fName, [
         Validators.required
       ]),
-      lastName: new FormControl(null, [
+      lastName: new FormControl(lName, [
         Validators.required
       ])
     });
   }
 
+  ngOnInit() {
+  }
+
+  public updateProfile() {
+    this.authService.updateUser(this.form.value);
+    this.router.navigate(['/'])
+  }
+
   get email() {
     return this.form.get('email');
-  }
-  get password() {
-    return this.form.get('password');
   }
   get firstName() {
     return this.form.get('firstName');
@@ -58,23 +72,6 @@ export class SignupComponent implements OnInit {
   }
   get stdId() {
     return this.form.get('stdId');
-  }
-
-  ngOnInit() { }
-
-  signUp() {
-    if (this.form.invalid) {
-      console.log("กรุณากรอกข้อมูลให้ครบ");
-      //this.toastr.error("กรุณากรอกข้อมูลให้ครบทุกช่อง");
-      return;
-    }
-
-    const val = this.form.value;
-    this.authService.emailSignUp(val);
-  }
-
-  gotoLogin() {
-    this.router.navigate(['/signin']);
   }
 
 }

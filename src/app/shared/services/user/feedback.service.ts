@@ -13,7 +13,7 @@ export class FeedbackService {
     if(comment == undefined || comment == '' || comment == null){
       comment = '';
     }
-    this.db.object(`users/${this.authService.authInfo$.value.$uid}/feedback/${courseId}/${AttendanceId}`).update({
+    this.db.object(`users/${this.authService.currentUserId}/feedback/${courseId}/${AttendanceId}`).update({
       AttendanceId: AttendanceId,
       comment: comment,
       rating: rating,

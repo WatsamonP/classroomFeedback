@@ -12,16 +12,18 @@ import { Router } from "@angular/router";
 export class HeaderComponent implements OnInit {
 
   item: Observable<any>;
+  authUid: String;
 
   constructor(private authService: AuthService,private afDb: AngularFireDatabase,private router: Router,){
-    this.item = afDb.object(`users/${this.authService.authInfo$.value.$uid}/profile`).valueChanges();
+    this.authUid = this.authService.currentUserId;
+    this.item = afDb.object(`users/${this.authUid}/profile`).valueChanges();
   }
 
   ngOnInit(){}
 
   signout(){
     console.log('out')
-    this.authService.logout();
+    this.authService.signOut();
   }
 
   pushPageManual() {

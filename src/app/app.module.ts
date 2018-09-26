@@ -34,7 +34,9 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { CourseService } from './shared/services/course/course.service'
 import { MessageService } from './shared/services/messageService'
 import { DataService } from './shared/services/data/data.service'
-import { ReactionService } from './shared/services/reaction/reaction.service'
+import { ReactionService } from './shared/services/reaction/reaction.service';
+import { ProfileComponent } from './profile/profile.component'
+import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { ReactionService } from './shared/services/reaction/reaction.service'
     LayoutComponent,
     ScoreComponent,
     QrCodeComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +68,7 @@ import { ReactionService } from './shared/services/reaction/reaction.service'
     NgbModule.forRoot(),
     NgbDropdownModule.forRoot(),
   ],
-  providers: [AuthService, AuthGuard, UserService, AngularFireDatabase, CourseService, DataService,ReactionService],
+  providers: [AuthService, AuthGuard, UserService, AngularFireDatabase, CourseService, DataService,ReactionService, NgbRatingConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

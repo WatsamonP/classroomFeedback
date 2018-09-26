@@ -7,7 +7,8 @@ import * as _ from "lodash";
 export class ReactionService {
 
   userId: string;
-  emojiList = ['dead', 'cry', 'bored', 'sleep', 'cry-smile', 'smile', 'love']
+  //emojiList = ['dead', 'cry', 'bored', 'sleep', 'cry-smile', 'smile', 'love']
+  emojiList = ['crazy','cry', 'dead', 'cry-smile', 'smile', 'love','bored', 'sleep']
   //emojiList = ['like', 'love', 'wow', 'haha', 'sad', 'angry']
   constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth) {
     this.afAuth.authState.subscribe((auth) => {

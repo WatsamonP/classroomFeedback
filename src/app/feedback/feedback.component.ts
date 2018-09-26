@@ -9,6 +9,7 @@ import { AuthService } from "../shared/services/auth.service";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
+import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-feedback',
@@ -17,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class FeedbackComponent implements OnInit {
 
+  authUid: String;
   item: any;
   courseParam: String;
   objectKeys = Object.keys;
@@ -47,6 +49,15 @@ export class FeedbackComponent implements OnInit {
   attendanceSelectedDate: any;
   attendanceSelectedKey: any;
   dateString: String = 'กรุณาเลือกวันที่';
+  //currentRate = 0;
+  //ratingList: any;
+  ratingList = [
+    { index: 1, topic: "เอกสารและสื่อประกอบการสอน", currentRate: 0 },
+    { index: 2, topic: "ประสิทธิภาพการสอน", currentRate: 0 },
+    { index: 3, topic: "ความครบถ้วนของเนื้อหา", currentRate: 0 },
+    { index: 4, topic: "คุณภาพของความรู้ที่ได้รับ", currentRate: 0 },
+    { index: 5, topic: "ความเป็นครูและการเป็นแบบอย่าง (Role Model)", currentRate: 0 },
+  ]
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -58,7 +69,10 @@ export class FeedbackComponent implements OnInit {
     private fb: FormBuilder,
     private reactionSvc: ReactionService,
     private toastr: ToastrService,
+    config: NgbRatingConfig
   ) {
+    this.authUid = this.authService.currentUserId;
+    config.max = 5;
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       this.courseParam = params.get('id');
       this.data.currentMessage.subscribe(message => {
@@ -67,7 +81,7 @@ export class FeedbackComponent implements OnInit {
       if (this.item == 'default message')
         this.router.navigate(['/']);
       else
-        this.itemFeedback = this.afDb.object(`users/${this.authService.authInfo$.value.$uid}/feedback/${this.courseParam}`).valueChanges();
+        this.itemFeedback = this.afDb.object(`users/${this.authUid}/feedback/${this.courseParam}`).valueChanges();
 
       this.emojiList = this.reactionSvc.emojiList;
 
@@ -98,12 +112,12 @@ export class FeedbackComponent implements OnInit {
       })
   }
 
-  clearContent(){
+  clearContent() {
     this.isReactFeeling = false;
     this.feedbackCommentBox = false
     this.reactFeelingIndex = null;
     this.reactFeeling = null;
-    this.feedbackForm.patchValue({feedback: null})
+    this.feedbackForm.patchValue({ feedback: null })
   }
 
   // เลือกวันที่
@@ -114,38 +128,50 @@ export class FeedbackComponent implements OnInit {
     this.dateString = moment(item.student.attendance[key].date).format("DD/MM/YYYY");
   }
 
-  onClickReactFeel(index){
+  onClickReactFeel(index) {
     this.isReactFeeling = true; // แสดงบนกล่องว่าเลือก ?
     this.feedbackCommentBox = true;
     this.reactFeelingIndex = index;
-    if(index == 0){
-      this.reactFeeling = 'ไม่โอเค';  // ข้อความ
-    }else if(index == 1){
+    if (index == 0) {
       this.reactFeeling = 'ยากมาก';  // ข้อความ
-    }else if(index == 2){
-      this.reactFeeling = 'น่าเบื่อ';  // ข้อความ
-    }else if(index == 3){
-      this.reactFeeling = 'ง่วง';  // ข้อความ
-    }else if(index == 4){
+    } else if (index == 1) {
+      this.reactFeeling = 'ยาก';  // ข้อความ
+    } else if (index == 2) {
+      this.reactFeeling = 'ไม่โอเค';  // ข้อความ
+    } else if (index == 3) {
       this.reactFeeling = 'โอเค';  // ข้อความ
-    }else if(index == 5){
+    } else if (index == 4) {
       this.reactFeeling = 'ดี';  // ข้อความ
-    }else if(index == 6){
+    } else if (index == 5) {
       this.reactFeeling = 'ดีมาก';  // ข้อความ
+    } else if (index == 6) {
+      this.reactFeeling = 'น่าเบื่อ';  // ข้อความ
+    } else if (index == 7) {
+      this.reactFeeling = 'ง่วง';  // ข้อความ
     }
   }
 
-  onClickReachFeedback(){
+  onClickReachFeedback() {
     this.feedbackCommentBox = true;
   }
 
   onClickSave() {
-    if(this.reactFeelingIndex == null){
-      this.toastr.error('กรุณาเลือกความรู้สึก','ผิดพลาด')
+    if (this.reactFeelingIndex == null) {
+      this.toastr.error('กรุณาเลือกความรู้สึก', 'ผิดพลาด')
       return false;
     }
-    console.log('รู้สึก ',this.reactFeeling,this.reactFeelingIndex)
-    console.log('feedback ',this.feedbackForm.value.feedback)
+    console.log('รู้สึก ', this.reactFeeling, this.reactFeelingIndex)
+    console.log('feedback ', this.feedbackForm.value.feedback)
+
+    this.afDb.object(`users/${this.authUid}/feedback/${this.courseParam}/${this.attendanceSelectedKey}`).update({
+      attendanceId: this.attendanceSelectedKey,
+      comment: this.feedbackForm.value.feedback,
+      rating: this.reactFeelingIndex,
+      feeling: this.reactFeeling,
+      date: Date(),
+      isFeedback: true
+    });
+    this.toastr.success('บันทึกผลการประเมินแล้ว', 'สำเร็จ')
   }
 
   toggleShow() {
@@ -155,6 +181,21 @@ export class FeedbackComponent implements OnInit {
 
   emojiPath(emoji) {
     return `assets/reactions/${emoji}.svg`
+  }
+
+  emojiPathPng(emoji) {
+    return `assets/reactions/${emoji}.png`
+  }
+
+  public pushpage(path) {
+    console.log(this.item)
+    if (path == 'score') {
+      this.data.changeMessage(this.item)
+      this.router.navigate(['/score', this.item.course.id]);
+    } else if (path == 'dashboard') {
+      //this.data.changeMessage(this.item)
+      this.router.navigate(['/dashboard']);
+    }
   }
 
 
@@ -175,12 +216,12 @@ export class FeedbackComponent implements OnInit {
 
 
   onClickRating(score, item) {
-    
+
     this.feedbackRating = score;
     this.feedbackCommentBox = true;
   }
 
-  react(val,index) {
+  react(val, index) {
     this.clickIndex = val;
     this.feedbackCommentBox = true;
     /*
@@ -193,7 +234,7 @@ export class FeedbackComponent implements OnInit {
     }*/
   }
 
-  
+
 
   hasReactions(index) {
     return _.get(this.reactionCount, index.toString())

@@ -1,36 +1,49 @@
-<app-header></app-header>
+<nav class="navbar navbar-dark bg-dark">
+  <div>
+    <button type="button" class="btn btn-dark" (click)="pushpage('dashboard')">
+      <i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp;BACK
+    </button>
+  </div>
+
+  <div id="navbarSupportedContent">
+    <button type="button" class="btn btn-dark" (click)="pushpage('feedback')">
+      FEEDBACK&nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
+    </button>
+  </div>
+</nav>
+
 <div id="body">
-  <div style="padding: 15px"></div>
-  <div class="card" style="width: 84%; left: 8%">
+  <div style="padding: 10px"></div>
+  <div class="card" style="width: 90%; left: 5%">
     <div class="card-header bg-facebook text-light">
       <b>{{item.course.id}} : {{item.course.name}}</b>
     </div>
     <div class="card-body">
       <div class="text-left">
-        <h5 class="card-title">
-          <i class="fa fa-id-card text-facebook" aria-hidden="true"></i> นักศึกษา
-        </h5>
-        <p>
-          &nbsp;&nbsp;&nbsp;&nbsp; {{item.student.id}} {{item.student.name}}<br> &nbsp;&nbsp;&nbsp;&nbsp; กลุ่มเรียนที่ {{item.student.group}}
-        </p>
+        <i class="fa fa-id-card text-facebook" aria-hidden="true"></i>&nbsp;<b>{{item.student.id}}</b>
+        <div style="padding-left:20px">{{item.student.name}}</div>
+        <div style="padding-left:20px">กลุ่ม : {{item.student.group}}</div>
       </div>
 
+      <hr>
       <table class="table text-center">
         <thead class="bg-light">
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">คะแนน</th>
-            <th scope="col">เปอร์เซนต์</th>
+            <th scope="col" style="font-size:90%">#</th>
+            <th scope="col" style="font-size:90%">คะแนน</th>
+            <th scope="col" style="font-size:90%">เปอร์เซนต์</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let score of scoreList; let i = index">
-            <th scope="row"> {{ score.key }}</th>
-            <td><b>{{ score.sumScore }}</b> / {{ score.totalScore }}</td>
-            <td><b>{{ score.studentPercent | number : '1.2-2' }}</b> / {{ score.percentage }}</td>
+            <th scope="row" style="font-size:90%"> {{ score.key }}</th>
+            <td><b>{{ score.sumScore }}</b>/{{ score.totalScore }}</td>
+            <td><b>{{ score.studentPercent | number : '1.2-2' }}</b>/{{ score.percentage }}</td>
           </tr>
         </tbody>
       </table>
+
+
       <!--div >
         <div class="row">
           <div class="col-5 text-left">
@@ -45,7 +58,25 @@
 
 
     <div class="card-footer">
-
+      <table class="table text-center">
+        <thead class="bg-facebook">
+          <tr>
+            <th scope="col" style="font-size:90%">รวม</th>
+            <th scope="col" style="font-size:90%">เกรด</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row" style="font-size:90%">{{summary.totalScore}}/{{summary.totalPercent}} คะแนน</th>
+            <th scope="row" style="font-size:90%">{{ summary.grade }}</th>
+          </tr>
+        </tbody>
+      </table>
+      <!--b>รวม : </b><br>
+      <b>เกรด : {{summary.grade}}</b-->
+      <span *ngIf="summary.totalPercent == 0" class="text-danger text-center" style="font-size:85%">
+        ถ้า "เปอร์เซนต์" เป็น 0 หมายถึง อาจารย์ประจำวิชายังไม่ได้กำหนดค่า เปอร์เซนต์คะแนน
+      </span>
     </div>
   </div>
 </div>

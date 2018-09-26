@@ -6,7 +6,7 @@
   <div *ngIf="!isLoader">
     <!--ไม่เจอ------------------------------------------------------------>
     <div *ngIf="isNotFound">
-      <div style="padding: 10%">
+      <div style="padding: 8%">
         <h4 class="text-danger text-center">ไม่พบรายวิชาที่นักศึกษาลงทะเบียน</h4>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <p style="display:inline">
@@ -17,40 +17,43 @@
     </div>
     <!--เจอ------------------------------------------------------------>
     <div *ngIf="!isNotFound">
+      <div style="padding: 15px"></div>
+      <h4 class="text-primary text-center">รายวิชาที่นักศึกษาลงทะเบียน</h4>
       <div style="padding: 10px"></div>
-      <h4 class="text-facebook text-center">รายวิชาที่นักศึกษาลงทะเบียน</h4>
-      <div style="padding: 5px"></div>
       <div *ngFor="let item of studentlist; let i = index;">
-        <div class="card" style="width: 90%; left: 5%">
+        <div class="card" style="width: 84%; left: 8%">
           <div class="card-header bg-facebook text-light">
             <b>{{item.course.id}} : {{item.course.name}}</b>
           </div>
 
 
           <div class="card-body">
-            <div class="text-left">
-              <i class="fa fa-book text-facebook" aria-hidden="true"></i> รายละเอียด<br>
-              <b style="padding-left:20px">รหัสวิชา</b> {{item.course.id}}<br>
-              <b style="padding-left:20px">วิชา</b> {{item.course.name}}<br>
-              <b style="padding-left:20px">ประจำปีการศึกษา</b> {{item.course.trimester}}/{{item.course.year}}<br>
-            </div>
-            <div class="text-left" style="padding-top:10px">
-              <i class="fa fa-user text-facebook" aria-hidden="true"></i>&nbsp;&nbsp;อาจารย์ประจำรายวิชา<br>
-              <B style="padding-left:20px">{{item.teacher.data.profile.firstName}} {{item.teacher.data.profile.lastName}}</B>
-            </div>
+            <h6 class="card-title">
+              <i class="fa fa-book text-facebook" aria-hidden="true"></i><B> รายละเอียด</B>
+            </h6>
+            <p>
+              <b>รหัสวิชา</b> {{item.course.id}}<br> 
+              <b>วิชา</b> {{item.course.name}}<br>              
+              <b>ประจำปีการศึกษา</b> {{item.course.trimester}} / {{item.course.year}}<br> 
+            </p>
+
+            <h6 class="card-title">&nbsp;<i class="fa fa-user text-facebook" aria-hidden="true"></i>&nbsp;&nbsp;<B>อาจารย์ผู้สอน
+                </B>: {{item.teacher.data.profile.firstName}} {{item.teacher.data.profile.lastName}}
+            </h6>
+
           </div>
 
 
           <div class="card-footer">
             <div class="row">
-              <div class="col-6">
-                <button type="button" class="btn btn-sm btn-light btn-block" (click)="onClickCheckScore(item)">
+              <div class="col-md-6">
+                <button type="button" class="btn btn-sm btn-light" (click)="onClickCheckScore(item)">
                   <i class="fa fa-file text-facebook" aria-hidden="true"></i>&nbsp; ตรวจสอบคะแนน
                 </button>
               </div>
 
-              <div class="col-6">
-                <button type="button" class="btn btn-sm btn-light btn-block" (click)="onClickFeedback(item)">
+              <div class="col-md-6">
+                <button type="button" class="btn btn-sm btn-light" (click)="onClickFeedback(item)">
                   <i class="fa fa-star text-facebook" aria-hidden="true"></i>&nbsp; ประเมินการสอน
                 </button>
               </div>

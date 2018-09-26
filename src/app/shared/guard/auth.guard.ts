@@ -1,29 +1,43 @@
-import { tap, take, map, filter } from 'rxjs/operators';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from "@angular/router";
-import { Observable } from "rxjs/Rx";
-import { Injectable } from "@angular/core";
-import { AuthService } from "../services/auth.service";
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AuthService } from '../services/auth.service';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/take';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-	constructor(private authService:AuthService, private router:Router) {}
+  constructor(
+    private router: Router,
+    private afAuth: AngularFireAuth,
+    private auth: AuthService
+  ) {}
 
-	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-
-		if (this.authService.authInfo$.getValue().isLoggedIn()) {
-			return true;
-		}
-		
-		return this.authService.getAuthInfo()
-			.map( (authInfo ) => authInfo.isLoggedIn())
-			.do(allowed => {
-				if(!allowed) {
-					this.router.navigate(['/signin']);
-					return false;
-				}else{
-					return true;
-				}
-			}).take(1);
-		}
+  canActivate(next: ActivatedRouteSnapshot,state: RouterStateSnapshot): Observable<boolean> | boolean {
+    return this.afAuth.authState
+      .take(1)
+      .map(user => !!user)
+      .do(loggedIn => {
+        if (!loggedIn) {
+        this.router.navigate(['/signin']);
+      }
+      })
+    }
+    
+  
+  /*
+  canActivate() {
+    if(localStorage.getItem('isLoggedin')  ) {
+      return true;//&& this.auth.loggedIn()
+    }
+      localStorage.removeItem('token');
+      this.router.navigate(['/login']);
+      console.log(this.auth.authState+'//'+this.auth.loggedIn())
+      return false;
+    
+  }
+  */
 }

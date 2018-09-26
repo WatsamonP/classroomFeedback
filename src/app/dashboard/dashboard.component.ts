@@ -32,8 +32,15 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private data: DataService
   ) {
-    this.authUid = this.authService.authInfo$.value.$uid;
+    this.authUid = this.authService.currentUserId;
+    //this.authUid = this.authService.authInfo$.value.$uid;
     _afDb.object(`users/${this.authUid}/profile`).valueChanges().subscribe((res) => {
+      
+      if(res == null || res == undefined){
+        this.router.navigate(['/profile'])
+        return false;
+      }
+
       this.authItem = res;
       this.student_id = this.authItem.stdId;
       this.studentlist = [];
@@ -43,7 +50,8 @@ export class DashboardComponent implements OnInit {
         tempTeacher = Object.keys(res);
         for (var i = 0; i < tempTeacher.length; i++) {
           this._courseService.getCourse(tempTeacher[i], res[tempTeacher[i]]).subscribe((resCourse) => {
-            this.getStudent(resCourse);
+            if(resCourse.course !== null)
+              this.getStudent(resCourse);
             setTimeout(() => { this.isLoader = false; }, 1500);
           })
         }
@@ -54,12 +62,11 @@ export class DashboardComponent implements OnInit {
 
   // res มี Object ของ Teacher และ Course
   getStudent(res) {
-    //console.log(res)
+    console.log(res)
     let courseKey = Object.keys(res.course)
     for (var i = 0; i < courseKey.length; i++) {
       this._courseService.getStudent(res.teacher, courseKey[i], res.course[courseKey[i]], this.student_id).subscribe((resStudent) => {
         if (resStudent.student !== null) {
-          console.log(resStudent)
           this.studentlist.push(resStudent)
           this.isNotFound = false;
         }

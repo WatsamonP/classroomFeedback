@@ -1,0 +1,46 @@
+<div id="body">
+  <div id="content">
+    
+    <div style="padding:10px"></div>
+
+    <div style="padding-bottom:5px">กรุณาตรวจสอบข้อมูล</div>
+
+    <form autocomplete="off" novalidate class="login-form" [formGroup]="form">
+      <fieldset>
+        <div class="input-group" style="padding-bottom: 10px">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="btnGroupAddon">
+              <i class="material-icons">contact_mail</i>
+            </div>
+          </div>
+          <input type="text" formControlName="email" class="form-control" placeholder="Email" aria-label="Input group example" aria-describedby="btnGroupAddon">
+        </div>
+        <!--///-->
+        <div class="input-group" style="padding-bottom: 10px">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="btnGroupAddon">
+              <i class="material-icons">assignment_ind</i>
+            </div>
+          </div>
+          <input type="text" placeholder="Student ID" formControlName="stdId" class="form-control">
+        </div>
+        <!--///-->
+        <!--///-->
+        <div class="input-group" style="padding-bottom: 10px">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="btnGroupAddon">
+              <i class="material-icons">person</i>
+            </div>
+          </div>
+          <input type="text" placeholder="First Name" formControlName="firstName" class="form-control">
+          <input type="text" placeholder="Last Name" formControlName="lastName" class="form-control">
+        </div>
+        <!--///-->
+      </fieldset>
+
+      <button type="button" class="btn btn-primary btn-block" (click)="updateProfile()">SAVE</button>
+      <br>
+
+    </form>
+  </div>
+</div>

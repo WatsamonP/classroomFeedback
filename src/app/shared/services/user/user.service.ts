@@ -17,7 +17,7 @@ export class UserService {
   
 
   getUserList(){
-    this.userList = this.db.object(`users/${this.authService.authInfo$.value.$uid}/profile`);
+    this.userList = this.db.object(`users/${this.authService.currentUserId}/profile`);
     return this.userList;
   }
 
