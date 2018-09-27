@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-feedback',
@@ -69,6 +70,7 @@ export class FeedbackComponent implements OnInit {
     private fb: FormBuilder,
     private reactionSvc: ReactionService,
     private toastr: ToastrService,
+    private httpClient: HttpClient,
     config: NgbRatingConfig
   ) {
     this.authUid = this.authService.currentUserId;
@@ -162,18 +164,35 @@ export class FeedbackComponent implements OnInit {
     }
     console.log('รู้สึก ', this.reactFeeling, this.reactFeelingIndex)
     console.log('feedback ', this.feedbackForm.value.feedback)
-
+    let now = Date();
     this.afDb.object(`users/${this.authUid}/feedback/${this.courseParam}/${this.attendanceSelectedKey}`).update({
       attendanceId: this.attendanceSelectedKey,
       comment: this.feedbackForm.value.feedback,
       rating: this.reactFeelingIndex,
       feeling: this.reactFeeling,
-      date: Date(),
+      date: now,
       isFeedback: true
     });
     this.toastr.success('บันทึกผลการประเมินแล้ว', 'สำเร็จ')
+    this.APIrequest(now);
   }
 
+  APIrequest(now){
+    this.httpClient.post('http://127.0.0.1:5000/start', {
+      uid: this.item.teacher.uid, cid: this.courseParam ,
+      attendanceId: this.attendanceSelectedKey,
+      comment: this.feedbackForm.value.feedback,
+      feeling: this.reactFeeling,
+      date: now
+      }).subscribe(
+        response => {
+          console.log(response);
+        },
+        err => {
+          console.log("ok");
+        }
+      );
+  }
   toggleShow() {
     this.showEmojis = !this.showEmojis
   }
