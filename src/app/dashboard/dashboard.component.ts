@@ -39,7 +39,6 @@ export class DashboardComponent implements OnInit {
       
       if(res == null || res == undefined){
         this.router.navigate(['/config-user'], { skipLocationChange: true});
-        //this.router.navigate(['/profile'])
         return false;
       }
 
