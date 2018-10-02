@@ -71,9 +71,8 @@ export class AuthService {
     return this.afAuth.auth.signInWithPopup(provider)
       .then((credential) => {
         console.log(credential.user);
-        this.authState = credential.user
-        
-        this.router.navigate(['/profile'])
+        this.authState = credential.user;
+        this.router.navigate(['/config-user'], { skipLocationChange: true});
       })
       .catch(error => console.log(error));
   }
