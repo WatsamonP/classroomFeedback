@@ -1,6 +1,6 @@
 <div id="body">
   <div id="content">
-    <img src="assets/images/logo.png" width="200px" /><br><br>
+    <img src="assets/images/feedback.png" width="180px" /><br><br>
     <form autocomplete="off" novalidate class="login-form" [formGroup]="form">
       <fieldset>
 
@@ -10,28 +10,67 @@
               <i class="material-icons">contact_mail</i>
             </div>
           </div>
-          <input type="text" formControlName="email" class="form-control" 
-                placeholder="Email" aria-label="Input group example" aria-describedby="btnGroupAddon">
+          <input type="text" formControlName="email" class="form-control" placeholder="Email" aria-label="Input group example"
+            aria-describedby="btnGroupAddon">
+          <!-- Valid -->
+          <div *ngIf="email.value==null" class="input-group-append"></div>
+          <div *ngIf="email.value!=null && email.errors" class="input-group-append">
+            <label class="input-group-text bg-danger text-light">
+              <i class="fa fa-close" aria-hidden="true"></i></label>
+          </div>
+          <div *ngIf="email.valid" class="input-group-append">
+            <label class="input-group-text bg-success text-light" style="width: 40px">
+              <i class="fa fa-check" aria-hidden="true"></i></label>
+          </div>
         </div>
         <!--///-->
-        <div class="input-group" style="padding-bottom: 20px">
+        <div class="input-group">
           <div class="input-group-prepend">
             <div class="input-group-text" id="btnGroupAddon">
               <i class="material-icons">vpn_key</i>
             </div>
           </div>
-          <input type="password" formControlName="password" class="form-control" 
-                placeholder="Password" aria-label="Input group example" aria-describedby="btnGroupAddon">
+          <input type="password" formControlName="password" class="form-control" placeholder="Password" aria-label="Input group example"
+            aria-describedby="btnGroupAddon">
+          <!-- Valid -->
+          <div *ngIf="password.value==null" class="input-group-append"></div>
+          <div *ngIf="password.value!=null && password.errors" class="input-group-append">
+            <label class="input-group-text bg-danger text-light">
+              <i class="fa fa-close" aria-hidden="true"></i></label>
+          </div>
+          <div *ngIf="password.valid" class="input-group-append">
+            <label class="input-group-text bg-success text-light" style="width: 40px">
+              <i class="fa fa-check" aria-hidden="true"></i></label>
+          </div>
         </div>
+        <span *ngIf="password.value!=null && password.errors" style="font-size:80%; padding-bottom: 5px" class="text-danger text-center">
+          รหัสผ่าน 6 ตัวขึ้นไป
+        </span>
+        <div style="padding-bottom: 20px"></div>
+
         <!--///-->
-        <div class="input-group" style="padding-bottom: 10px">
+        <div class="input-group">
           <div class="input-group-prepend">
             <div class="input-group-text" id="btnGroupAddon">
               <i class="material-icons">assignment_ind</i>
             </div>
           </div>
           <input type="text" placeholder="Student ID" formControlName="stdId" class="form-control">
+          <!-- Valid -->
+          <div *ngIf="stdId.value==null" class="input-group-append"></div>
+          <div *ngIf="stdId.value!=null && stdId.errors" class="input-group-append">
+            <label class="input-group-text bg-danger text-light">
+              <i class="fa fa-close" aria-hidden="true"></i></label>
+          </div>
+          <div *ngIf="stdId.valid" class="input-group-append">
+            <label class="input-group-text bg-success text-light" style="width: 40px">
+              <i class="fa fa-check" aria-hidden="true"></i></label>
+          </div>
         </div>
+        <span *ngIf="stdId.value!=null && stdId.errors" style="font-size:80%; padding-bottom: 5px" class="text-danger text-center">
+          ต้องขึ้นตัวด้วย B D หรือ M ตามด้วยตัวเลข 7 ตัว
+        </span>
+        <div style="padding-bottom: 10px"></div>
         <!--///-->
         <!--///-->
         <div class="input-group" style="padding-bottom: 10px">
@@ -42,26 +81,31 @@
           </div>
           <input type="text" placeholder="First Name" formControlName="firstName" class="form-control">
           <input type="text" placeholder="Last Name" formControlName="lastName" class="form-control">
+          <!-- Valid -->
+          <div *ngIf="firstName.value==null || lastName.value==null " class="input-group-append"></div>
+          <div *ngIf="(firstName.value!=null && firstName.errors) || (lastName.value!=null && lastName.errors)" class="input-group-append">
+            <label class="input-group-text bg-danger text-light">
+              <i class="fa fa-close" aria-hidden="true"></i></label>
+          </div>
+          <div *ngIf="firstName.valid && lastName.valid " class="input-group-append">
+            <label class="input-group-text bg-success text-light" style="width: 40px">
+              <i class="fa fa-check" aria-hidden="true"></i></label>
+          </div>
         </div>
         <!--///-->
-    
 
-    
+
+
       </fieldset>
-      
-      <button type="button" class="btn btn-primary" (click)="signUp()">Register</button>
-      <br><hr>
+
+      <button type="button" [disabled]="!form.valid" class="btn btn-primary" (click)="signUp()">Register</button>
+      <br>
+      <hr>
       <p>
         มีบัญชีผู้ใช้แล้ว
         <button type="button" class="btn btn-default btn-sm" (click)="gotoLogin()">LOGIN</button>
       </p>
-      
+
     </form>
   </div>
 </div>
-    
-    
-    
-    
-    
-    

@@ -26,10 +26,12 @@ export class SignupComponent implements OnInit {
     this.form = this.fb.group({
       email: new FormControl(null, [
         Validators.required,
-        Validators.pattern(emailPattern)
+        Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[.][a-z]{2,4}$")
       ]),
       password: new FormControl(null, [
-        Validators.required
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(25)
       ]),
       stdId: new FormControl(null, [
         Validators.required,

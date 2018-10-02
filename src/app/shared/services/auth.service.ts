@@ -102,12 +102,17 @@ export class AuthService {
   emailLogin(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then((user) => {
-        this.authState = user
+        this.authState = user;
+        this.toastr.success('เข้าสู่ระบบสำเร็จ','Success');
         //this.updateUserData()
         this.router.navigate(['/dashboard'])
       })
       .catch((error) => {
         console.log(error);
+        let message = String(error.message);
+        if(message.includes('network')){
+          this.toastr.warning('A network error','Error !');
+        }
         this.toastr.warning('Email หรือ Password ไม่ถูกต้อง','Error !');
       });
   }

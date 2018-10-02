@@ -10,11 +10,14 @@ import { SigninComponent } from './signin/signin.component';
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { FeedbackComponent } from './feedback/feedback.component'
 import { ProfileComponent } from './profile/profile.component';
+import { AuthService } from './shared/services/auth.service';
+import { UpdateProfileComponent } from './update-profile/update-profile.component' 
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard]},
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  { path: 'config-user', component: ProfileComponent, canActivate: [AuthGuard]},
+  { path: 'profile', component: UpdateProfileComponent, canActivate: [AuthGuard]},
   { path: 'feedback/:id', component: FeedbackComponent, canActivate: [AuthGuard]},
   { path: 'score/:id', component: ScoreComponent, canActivate: [AuthGuard]},
   { path: 'manual', component: ManualComponent},

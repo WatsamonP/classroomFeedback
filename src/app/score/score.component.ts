@@ -10,6 +10,7 @@ import { AuthService } from "../shared/services/auth.service";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
+import { NgbModal, ModalDismissReasons, NgbAlert, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-score',
@@ -27,6 +28,8 @@ export class ScoreComponent implements OnInit {
   subscription: any;
   isError: boolean = false;
   summary: any;
+  allScore: any;
+  scoreExpand: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,6 +41,7 @@ export class ScoreComponent implements OnInit {
     private fb: FormBuilder,
     private reactionSvc: ReactionService,
     private toastr: ToastrService,
+    private modalService: NgbModal,
   ) {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       this.courseParam = params.get('id');
@@ -57,6 +61,7 @@ export class ScoreComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.allScore = []
     //let key = this.item.student.id;
     if (this.item.student == null || this.item.student == undefined || 
       this.item.course == null || this.item.course == undefined ) {
@@ -167,6 +172,13 @@ export class ScoreComponent implements OnInit {
       //this.data.changeMessage(this.item)
       this.router.navigate(['/dashboard']);
     }
+  }
+
+  public openEvent(content,score) {
+    this.scoreExpand = score.key;
+    console.log(this.item.student[this.scoreExpand])
+    console.log(score)
+    this.modalService.open(content, { centered: true });
   }
 
 

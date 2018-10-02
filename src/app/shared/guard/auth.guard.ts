@@ -14,20 +14,19 @@ export class AuthGuard implements CanActivate {
     private router: Router,
     private afAuth: AngularFireAuth,
     private auth: AuthService
-  ) {}
+  ) { }
 
-  canActivate(next: ActivatedRouteSnapshot,state: RouterStateSnapshot): Observable<boolean> | boolean {
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
     return this.afAuth.authState
       .take(1)
       .map(user => !!user)
       .do(loggedIn => {
         if (!loggedIn) {
-        this.router.navigate(['/signin']);
-      }
+          this.router.navigate(['/signin']);
+        }
       })
-    }
-    
-  
+  }
+
   /*
   canActivate() {
     if(localStorage.getItem('isLoggedin')  ) {

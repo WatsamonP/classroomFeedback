@@ -37,6 +37,7 @@ import { DataService } from './shared/services/data/data.service'
 import { ReactionService } from './shared/services/reaction/reaction.service';
 import { ProfileComponent } from './profile/profile.component'
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
     QrCodeComponent,
     FeedbackComponent,
     ProfileComponent,
+    UpdateProfileComponent,
   ],
   imports: [
     BrowserModule,

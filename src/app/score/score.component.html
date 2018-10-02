@@ -36,7 +36,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let score of scoreList; let i = index">
-            <th scope="row" style="font-size:90%"> {{ score.key }}</th>
+            <th scope="row" style="font-size:90%">
+              <button type="button" class="btn btn-light btn-sm" (click)="openEvent(showScore, score)">
+                {{ score.key | uppercase}}
+              </button>
+            </th>
             <td><b>{{ score.sumScore }}</b>/{{ score.totalScore }}</td>
             <td><b>{{ score.studentPercent | number : '1.2-2' }}</b>/{{ score.percentage }}</td>
           </tr>
@@ -80,3 +84,69 @@
     </div>
   </div>
 </div>
+
+<ng-template #showScore let-c="close" let-d="dismiss">
+  <div class="modal-header bg-facebook text-light">
+    <h5 class="modal-title" id="modal-basic-title">
+      {{ scoreExpand | uppercase }}
+    </h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body text-center">
+    <div *ngIf="item.student[scoreExpand] !== undefined">
+      <table class="table text-center">
+        <thead class="bg-light">
+          <tr>
+            <th scope="col" style="font-size:90%">#</th>
+            <th scope="col" style="font-size:90%">วันที่</th>
+            <th scope="col" style="font-size:90%">คะแนน</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let key of objectKeys(item.student[scoreExpand]); let s = index">
+            <th scope="row" class="text-left" style="font-size:90%">
+              {{ s+1 }}
+            </th>
+            <td scope="row" style="font-size:90%">
+              {{ item.student[scoreExpand][key].date | date:'d/M/yyyy'}}
+            </td>
+            <td>
+              <b>{{ item.student[scoreExpand][key].score }}</b>
+              <p class="text-success" *ngIf="scoreExpand == 'attendance' && item.student[scoreExpand][key].score !== '0'" style="display:inline; font-size:85%">
+                ( {{ item.student[scoreExpand][key].status}} )
+              </p>
+              <p class="text-danger" *ngIf="scoreExpand == 'attendance' && item.student[scoreExpand][key].score == '0'" style="display:inline; font-size:85%">
+                ( {{ item.student[scoreExpand][key].status}} )
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!--table class="table text-center">
+        <thead class="text-facebook">
+          <tr>
+            <th scope="col" style="font-size:90%">วันที่</th>
+            <th scope="col" style="font-size:90%">คะแนน</th>
+          </tr>
+        </thead>
+        <tbody>
+          <div *ngFor="let key of objectKeys(item.student[scoreExpand]); let s = index">
+            <tr>
+              <td style="font-size:90%" class="text-left">
+                {{ s+1 }}: {{ item.student[scoreExpand][key].date | date:'shortDate'}}
+              </td>
+              <td style="font-size:90%" class="text-center">
+                <b>{{ item.student[scoreExpand][key].score }}</b>
+                ({{ item.student[scoreExpand][key].status}})
+              </td>
+            </tr>
+          </div>
+        </tbody>
+      </table-->
+
+    </div>
+  </div>
+
+</ng-template>

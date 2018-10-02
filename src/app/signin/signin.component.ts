@@ -26,8 +26,7 @@ export class SigninComponent implements OnInit {
     private modalService: NgbModal,
 
   ) {
-
-    let emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+    let emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[.][a-z]{2,4}$";
     this.form = this.fb.group({
       email: new FormControl(null, [
         Validators.required,
@@ -78,6 +77,15 @@ export class SigninComponent implements OnInit {
 
   public open(content) {
     this.modalService.open(content, { centered: true });
+  }
+
+  forgotPassword(){
+    console.log(this.form.value.email);
+    if(this.form.value.email == undefined || this.form.value.email == '' || this.form.value.email == null ){
+      this.toastr.warning("กรุณากรอก Email");
+    }else{
+      this.authService.resetPassword(this.form.value.email);    
+    }
   }
 
 }

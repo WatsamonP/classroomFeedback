@@ -13,33 +13,32 @@ export class HeaderComponent implements OnInit {
 
   item: Observable<any>;
   authUid: String;
+  authState: boolean;
 
-  constructor(private authService: AuthService,private afDb: AngularFireDatabase,private router: Router,){
+  constructor(private authService: AuthService,private afDb: AngularFireDatabase,private router: Router){
     this.authUid = this.authService.currentUserId;
+    this.authState = this.authService.authState;
+
     this.item = afDb.object(`users/${this.authUid}/profile`).valueChanges();
   }
 
   ngOnInit(){}
 
   signout(){
-    console.log('out')
+    //console.log('out')
     this.authService.signOut();
   }
 
-  pushPageManual() {
-    this.router.navigate(['/manual']);
+  qrcode
+
+  pushPage(path) {
+    //console.log(this.authState)
+    this.router.navigate(['/'+path]);
     //this.showDetail = !this.showDetail;
   }
 
-  pushPageScore() {
-    this.router.navigate(['/score']);
-    //this.showDetail = !this.showDetail;
+  updateProfile(){
+    this.router.navigate(['/profile'])
   }
-
-  pushDashboard() {
-    this.router.navigate(['/']);
-    //this.showDetail = !this.showDetail;
-  }
-
 
 }

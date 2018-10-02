@@ -1,11 +1,11 @@
 export const environment = {
   production: true,
   feedback: {
-    apiKey: "AIzaSyA0FincfVwAgrFIQe2FJjL-rk7JsXpLaZE",
-    authDomain: "classroomfeedback-57c36.firebaseapp.com",
-    databaseURL: "https://classroomfeedback-57c36.firebaseio.com",
-    projectId: "classroomfeedback-57c36",
-    storageBucket: "classroomfeedback-57c36.appspot.com",
-    messagingSenderId: "875839446934"
+    apiKey: "AIzaSyCjWxtto3yAfu_OoM7RLBCH9i-SJt76lLM",
+    authDomain: "sut-feedback.firebaseapp.com",
+    databaseURL: "https://sut-feedback.firebaseio.com",
+    projectId: "sut-feedback",
+    storageBucket: "sut-feedback.appspot.com",
+    messagingSenderId: "263122649175"
   }
 };

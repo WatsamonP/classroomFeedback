@@ -1,55 +1,139 @@
+<app-header *ngIf="authUid !== null"></app-header>
+
+<nav *ngIf="authUid == null" class="navbar navbar-light bg-light">
+  <button type="button" class="btn btn-light" (click)="onClickBack()">
+    <i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp;BACK
+  </button>
+</nav>
+
 <div id="body">
-<div id="container">
-<div id="content">
-  
-  <ul><li style="text-align: center"><a>คู่มือการใช้งาน</a></li></ul>
-
-  <ul>
-    <li>
-      <p style="display:inline">- LOGIN เข้าสู่ระบบ</p><br>
-      <div style="text-align: center; padding-top: 8px">
-        <img src="assets/images/logo.png" width="180px" />
-      </div>
-    </li>
-
-    <li>
-      <p style="display:inline">- ระบบจะแสดงรายวิชาที่นักศึกษาลงทะเบียน</p><br>
-      <div style="text-align: center; padding-top: 8px">
-        <img src="assets/images/logo.png" width="180px" />
-      </div>
-    </li>
-
-    <li>
-      <p style="display:inline">- คลิกที่ชื่อรายวิชา เพื่อทำการประเมินการสอน</p><br>
-      <div style="text-align: center; padding-top: 8px">
-        <img src="assets/images/logo.png" width="180px" />
-      </div>
-    </li>
-
-    <li>
-      <p style="display:inline">- เลือกวันที่ที่ต้องการประเมินการสอน</p><br>
-      <div style="text-align: center; padding-top: 8px">
-        <img src="assets/images/logo.png" width="180px" />
-      </div>
-    </li>
-
-    <li>
-      <p style="display:inline">- ระบุความพึงพอใจ</p><br>
-      <div style="text-align: center; padding-top: 8px">
-        <img src="assets/images/logo.png" width="180px" />
-      </div>
-    </li>
-
-    <li>
-      <p style="display:inline">- ประเมินการสอนของอาจารย์ ในคลาสนั้นๆ</p><br>
-      <p style="display:inline" class="text-danger">ผลการประเมินจะถูกส่งไปเพื่อแก้ไขปัญหาการเรียนการสอน โดยจะไม่เปิดเผยตัวตนของนักศึกษา</p>
-      <div style="text-align: center; padding-top: 8px">
-        <img src="assets/images/logo.png" width="180px" />
-      </div>
-    </li>
-  </ul>
-</div>
-</div>
+  <div id="container">
+    <div id="content">
+      <ul>
+        <li style="text-align: center">
+          <a>คู่มือการใช้งาน</a>
+          <hr>
+          <div style="text-align: center" class="text-danger">
+            <div class="row">
+              <div class="col-6">
+                <button type="button" class="btn btn-sm btn-light btn-block" (click)="onClickCheckScore()">
+                  <i class="fa fa-file text-facebook" aria-hidden="true"></i>&nbsp; ตรวจสอบคะแนน
+                </button>
+              </div>
+              <div class="col-6">
+                <button type="button" class="btn btn-sm btn-light btn-block" (click)="onClickFeedback()">
+                  <i class="fa fa-star text-facebook" aria-hidden="true"></i>&nbsp; ประเมินการสอน
+                </button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
 
+<!--
+  //////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////
+-->
 
+<div *ngIf="isFeedback" id="body">
+  <div id="container">
+    <div id="content">
+      <ul>
+        <li style="text-align: center">
+          <a>ระบบประเมินการสอน</a>
+          <hr>
+          <div style="text-align: center; font-size: 90%" class="text-danger">
+            ผลการประเมินจะถูกส่งไปเพื่อแก้ไขปัญหา<br>การเรียนการสอนในครั้งต่อไป
+          </div>
+          <div style="text-align: center; font-size: 95%" class="text-danger">
+            <b>โดยจะไม่เปิดเผยตัวตนของนักศึกษา</b>
+          </div>
+        </li>
+      </ul>
+
+      <ul>
+        <li>
+          <p style="display:inline">- LOGIN เข้าสู่ระบบ</p><br>
+          <div style="text-align: center; padding-top: 8px">
+            <img src="assets/images/logo.png" width="180px" />
+          </div>
+        </li>
+
+        <li>
+          <p style="display:inline">- ระบบจะแสดงรายวิชาที่นักศึกษาลงทะเบียน</p><br>
+          <div style="text-align: center; padding-top: 8px">
+            <img src="assets/images/logo.png" width="180px" />
+          </div>
+        </li>
+
+        <li>
+          <p style="display:inline">- คลิกที่ชื่อรายวิชา เพื่อทำการประเมินการสอน</p><br>
+          <div style="text-align: center; padding-top: 8px">
+            <img src="assets/images/logo.png" width="180px" />
+          </div>
+        </li>
+
+        <li>
+          <p style="display:inline">- เลือกวันที่ที่ต้องการประเมินการสอน</p><br>
+          <div style="text-align: center; padding-top: 8px">
+            <img src="assets/images/logo.png" width="180px" />
+          </div>
+        </li>
+
+        <li>
+          <p style="display:inline">- ระบุความรู้สึกในการเรียน</p><br>
+          <div style="text-align: center; padding-top: 8px">
+            <img src="assets/images/logo.png" width="180px" />
+          </div>
+        </li>
+
+        <li>
+          <p style="display:inline">- ประเมินการสอน [ให้ Rating]</p><br>
+          <div style="text-align: center; padding-top: 8px">
+            <img src="assets/images/logo.png" width="180px" />
+          </div>
+        </li>
+
+        <li>
+          <p style="display:inline">- ประเมินการสอนของอาจารย์ ในคลาสนั้นๆ</p><br>
+          <p style="display:inline" class="text-danger">ผลการประเมินจะถูกส่งไปเพื่อแก้ไขปัญหาการเรียนการสอน
+            โดยจะไม่เปิดเผยตัวตนของนักศึกษา</p>
+          <div style="text-align: center; padding-top: 8px">
+            <img src="assets/images/logo.png" width="180px" />
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!--
+  //////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+<div *ngIf="isCheckScore" id="body">
+  <div id="container">
+    <div id="content">
+      <ul>
+        <li>
+          <p style="display:inline">- ตรวจสอบคะแนนภาพรวม</p><br>
+          <div style="text-align: center; padding-top: 8px">
+            <img src="assets/images/logo.png" width="180px" />
+          </div>
+        </li>
+
+        <li>
+          <p style="display:inline">- ตรวจสอบคะแนนโดยละเอียด</p><br>
+          <div style="text-align: center; padding-top: 8px">
+            <img src="assets/images/logo.png" width="180px" />
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</div>

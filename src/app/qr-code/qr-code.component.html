@@ -1,3 +1,48 @@
-<p>
-  qr-code works!
-</p>
+<app-header *ngIf="authUid !== null"></app-header>
+
+<nav *ngIf="authUid == null" class="navbar navbar-light bg-light">
+  <button type="button" class="btn btn-light" (click)="onClickBack()">
+    <i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp;BACK
+  </button>
+</nav>
+
+<div class="text-center" style="padding:5%">
+  <form [formGroup]="uForm">
+    <img src="{{qrcode}}" class="qr-code img-thumbnail img-responsive">
+    <br><br>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text" id="btnGroupAddon">
+          <i class="fa fa-address-card" aria-hidden="true"></i>
+        </div>
+      </div>
+      <input type="text" formControlName="content" class="form-control" placeholder="B58xxxxx" aria-label="Input group example"
+        aria-describedby="btnGroupAddon">
+
+      <!-- Valid -->
+      <div *ngIf="content.value==null" class="input-group-append"></div>
+      <div *ngIf="content.value!=null && content.errors" class="input-group-append">
+        <label class="input-group-text bg-danger text-light">
+          <i class="fa fa-close" aria-hidden="true"></i></label>
+      </div>
+      <div *ngIf="content.valid" class="input-group-append">
+        <label class="input-group-text bg-success text-light" style="width: 40px">
+          <i class="fa fa-check" aria-hidden="true"></i></label>
+      </div>
+    </div>
+    <span *ngIf="content.value!=null && content.errors" style="font-size:80%; padding-bottom: 5px" class="text-danger text-center">
+      ต้องขึ้นตัวด้วย B D หรือ M ตามด้วยตัวเลข 7 ตัว
+    </span>
+  </form>
+  <div style="padding:10px"></div>
+  <div>
+    <button type="button" class="btn btn-outline-primary btn-block" [disabled]="!uForm.valid" (click)="onGen()">Generate
+      Only</button>
+  </div>
+  <br>
+  <div>
+    <button type="button" (click)="onDownload()" class="btn btn-outline-success btn-block" [disabled]="!uForm.valid">
+      <i class="fa fa-download" aria-hidden="true"></i> Generate & Download
+    </button>
+  </div>
+</div>

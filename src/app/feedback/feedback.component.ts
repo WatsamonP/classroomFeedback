@@ -53,11 +53,12 @@ export class FeedbackComponent implements OnInit {
   //currentRate = 0;
   //ratingList: any;
   ratingList = [
-    { index: 1, topic: "เอกสารและสื่อประกอบการสอน", currentRate: 0 },
-    { index: 2, topic: "ประสิทธิภาพการสอน", currentRate: 0 },
-    { index: 3, topic: "ความครบถ้วนของเนื้อหา", currentRate: 0 },
-    { index: 4, topic: "คุณภาพของความรู้ที่ได้รับ", currentRate: 0 },
-    { index: 5, topic: "ความเป็นครูและการเป็นแบบอย่าง (Role Model)", currentRate: 0 },
+    { index: 0, topic: "เอกสารและสื่อประกอบการสอน", currentRate: 0, detail: "การเตรียมอกสารและสื่อประกอบการสอน ก่อนการเรียนการสอน"},
+    { index: 1, topic: "ประสิทธิภาพการสอน", currentRate: 0, detail: ""},
+    { index: 2, topic: "ความครบถ้วนของเนื้อหา", currentRate: 0 , detail: ""},
+    { index: 3, topic: "วิธีการสอนมีความน่าสนใจ", currentRate: 0, detail: "ทำให้ผู้เรียนสนใจเรียน"},
+    { index: 4, topic: "ใช้ภาษาในการสอนที่เหมาะสม", currentRate: 0, detail: "เข้าใจง่าย"},
+    { index: 5, topic: "มีการวัดผลผู้เรียน", currentRate: 0, detail: "เพื่อปรับปรุงแก้ไข"},
   ]
 
   constructor(
@@ -165,13 +166,22 @@ export class FeedbackComponent implements OnInit {
     console.log('รู้สึก ', this.reactFeeling, this.reactFeelingIndex)
     console.log('feedback ', this.feedbackForm.value.feedback)
     let now = Date();
+    let ratingList = {
+      0: this.ratingList[0].currentRate,
+      1: this.ratingList[1].currentRate,
+      2: this.ratingList[2].currentRate,
+      3: this.ratingList[3].currentRate,
+      4: this.ratingList[4].currentRate,
+      5: this.ratingList[5].currentRate,
+    }
     this.afDb.object(`users/${this.authUid}/feedback/${this.courseParam}/${this.attendanceSelectedKey}`).update({
       attendanceId: this.attendanceSelectedKey,
       comment: this.feedbackForm.value.feedback,
       rating: this.reactFeelingIndex,
       feeling: this.reactFeeling,
       date: now,
-      isFeedback: true
+      isFeedback: true,
+      ratingList: this.ratingList
     });
     this.toastr.success('บันทึกผลการประเมินแล้ว', 'สำเร็จ')
     this.APIrequest(now);

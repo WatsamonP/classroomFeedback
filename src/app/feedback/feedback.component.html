@@ -86,13 +86,14 @@
           </thead>
           <tbody>
             <tr *ngFor="let rate of ratingList; let i = index">
-              <td scope="row">{{ rate.index }}</td>
-              <td scope="row" style="text-align: left"> {{ rate.topic }}</td>
+              <td scope="row">{{ rate.index +1 }}</td>
+              <td scope="row" style="text-align: left;"> 
+                <b>{{ rate.topic }}</b>&nbsp;<p style="display:inline; font-size:88%">{{ rate.detail }}</p>
+              </td>
               <td scope="row">
                 <ngb-rating [(rate)]="rate.currentRate">
                   <ng-template let-fill="fill" let-index="index">
-                    <span class="star" [class.filled]="fill === 100" [class.one]="index == 0" [class.two]="index == 1" [class.three]="index == 2"
-                      [class.four]="index == 3" [class.five]="index == 4">&#9733;</span>
+                    <span class="star" [class.filled]="fill">&#9733;</span>
                   </ng-template>
                 </ngb-rating>
                 <!--pre>Rate: <b>{{currentRate}}</b></pre-->

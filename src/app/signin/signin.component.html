@@ -1,6 +1,6 @@
 <div id="body">
   <div id="content">
-    <img src="assets/images/logo.png" width="180px" /><br><br>
+    <img src="assets/images/feedback.png" width="180px" /><br><br>
     <form autocomplete="off" novalidate class="login-form" [formGroup]="form">
       <fieldset>
         <div class="input-group" style="padding-bottom: 10px">
@@ -24,7 +24,7 @@
 
       </fieldset>
 
-      <button type="button" class="btn btn-primary btn-sm btn-block" (click)="login()">
+      <button [disabled]="!form.valid" type="button" class="btn btn-primary btn-block" (click)="login()">
         SIGN IN
       </button>
 
@@ -37,7 +37,7 @@
           </button>
         </div>
         <div class="col">
-          <button type="button" style="font-size:12px" class="btn btn-light btn-sm btn-block" (click)="signupClick()">
+          <button type="button" style="font-size:12px" class="btn btn-light btn-sm btn-block" (click)="forgotPassword()">
             Forgot Password ?
           </button>
         </div>
@@ -56,11 +56,11 @@
         GOOGLE
       </button-->
 
-      <button disabled type="button" class="btn bg-facebook btn-circle text-light">
+      <button disabled type="button" class="btn bg-facebook btn-circle text-light" (click)="onClickFacebook()">
         <i class="fa fa-facebook" aria-hidden="true"></i>
       </button>
       &nbsp;&nbsp;
-      <button type="button" class="btn bg-google btn-circle text-light">
+      <button type="button" class="btn bg-google btn-circle text-light" (click)="onClickGoogle()">
         <i class="fa fa-google-plus" aria-hidden="true"></i>
       </button>
 

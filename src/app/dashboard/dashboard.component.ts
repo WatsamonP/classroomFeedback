@@ -5,6 +5,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from "rxjs";
 import { CourseService } from "../shared/services/course/course.service";
 import { DataService } from "../shared/services/data/data.service";
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,7 +38,8 @@ export class DashboardComponent implements OnInit {
     _afDb.object(`users/${this.authUid}/profile`).valueChanges().subscribe((res) => {
       
       if(res == null || res == undefined){
-        this.router.navigate(['/profile'])
+        this.router.navigate(['/config-user'], { skipLocationChange: true});
+        //this.router.navigate(['/profile'])
         return false;
       }
 
@@ -62,7 +64,7 @@ export class DashboardComponent implements OnInit {
 
   // res มี Object ของ Teacher และ Course
   getStudent(res) {
-    console.log(res)
+    //console.log(res)
     let courseKey = Object.keys(res.course)
     for (var i = 0; i < courseKey.length; i++) {
       this._courseService.getStudent(res.teacher, courseKey[i], res.course[courseKey[i]], this.student_id).subscribe((resStudent) => {

@@ -14,10 +14,10 @@ api = Api(app)
 CORS(app)
 
 configfeed = {
-    "apiKey": "AIzaSyA0FincfVwAgrFIQe2FJjL-rk7JsXpLaZE",
-    "authDomain": "classroomfeedback-57c36.firebaseapp.com",
-    "databaseURL": "https://classroomfeedback-57c36.firebaseio.com",
-    "storageBucket": "classroomfeedback-57c36.appspot.com"
+    "apiKey": "AIzaSyCjWxtto3yAfu_OoM7RLBCH9i-SJt76lLM",
+    "authDomain": "sut-feedback.firebaseapp.com",
+    "databaseURL": "https://sut-feedback.firebaseio.com",
+    "storageBucket": "sut-feedback.appspot.com",
 }
 
 configclass = {
