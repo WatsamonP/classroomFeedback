@@ -121,7 +121,7 @@ export class FeedbackComponent implements OnInit {
     this.reactFeelingIndex = null;
     this.reactFeeling = null;
     this.feedbackForm.patchValue({ feedback: null })
-    for(int i=0; i<this.ratingList.length; i++){
+    for(var i=0; i<this.ratingList.length; i++){
       this.ratingList[i].currentRate = 0;
     }
   }
@@ -178,7 +178,10 @@ export class FeedbackComponent implements OnInit {
       5: this.ratingList[5].currentRate,
     }
     this.APIrequest(now,ratingList);
-    /*this.afDb.object(`users/${this.authUid}/feedback/${this.courseParam}/${this.attendanceSelectedKey}`).update({
+  }
+
+  insert(now,ratingList){
+    this.afDb.object(`users/${this.authUid}/feedback/${this.courseParam}/${this.attendanceSelectedKey}`).update({
       attendanceId: this.attendanceSelectedKey,
       comment: this.feedbackForm.value.feedback,
       rating: this.reactFeelingIndex,
@@ -186,13 +189,16 @@ export class FeedbackComponent implements OnInit {
       date: now,
       isFeedback: true,
       ratingList: ratingList
-    });*/
+    });
     this.toastr.success('บันทึกผลการประเมินแล้ว', 'สำเร็จ')
+  }
 
+  error(){
+    this.toastr.error('เซิร์ฟเวอร์ไม่ตอบสนอง โปรดส่งความคิดเห็นอีกครั้ง')
   }
 
   APIrequest(now,ratingList){
-    this.httpClient.post('http://localhost:5000/start', { //https://sutfeedbackapi.herokuapp.com/
+    this.httpClient.post('https://sutfeedbackapi.herokuapp.com/start', { //https://sutfeedbackapi.herokuapp.com/start   http://localhost:5000/start
       uid: this.item.teacher.uid, cid: this.courseParam ,
       attendanceId: this.attendanceSelectedKey,
       comment: this.feedbackForm.value.feedback,
@@ -201,12 +207,12 @@ export class FeedbackComponent implements OnInit {
       ratingList: ratingList
       }).subscribe(
         response => {
-          console.log(response);
+          this.insert(now,ratingList);
         },
         err => {
+          this.error();
           console.log(err);
-        }
-      );
+        });
   }
   toggleShow() {
     this.showEmojis = !this.showEmojis
