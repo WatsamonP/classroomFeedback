@@ -121,6 +121,9 @@ export class FeedbackComponent implements OnInit {
     this.reactFeelingIndex = null;
     this.reactFeeling = null;
     this.feedbackForm.patchValue({ feedback: null })
+    for(int i=0; i<this.ratingList.length; i++){
+      this.ratingList[i].currentRate = 0;
+    }
   }
 
   // เลือกวันที่
@@ -174,32 +177,34 @@ export class FeedbackComponent implements OnInit {
       4: this.ratingList[4].currentRate,
       5: this.ratingList[5].currentRate,
     }
-    this.afDb.object(`users/${this.authUid}/feedback/${this.courseParam}/${this.attendanceSelectedKey}`).update({
+    this.APIrequest(now,ratingList);
+    /*this.afDb.object(`users/${this.authUid}/feedback/${this.courseParam}/${this.attendanceSelectedKey}`).update({
       attendanceId: this.attendanceSelectedKey,
       comment: this.feedbackForm.value.feedback,
       rating: this.reactFeelingIndex,
       feeling: this.reactFeeling,
       date: now,
       isFeedback: true,
-      ratingList: this.ratingList
-    });
+      ratingList: ratingList
+    });*/
     this.toastr.success('บันทึกผลการประเมินแล้ว', 'สำเร็จ')
-    this.APIrequest(now);
+
   }
 
-  APIrequest(now){
-    this.httpClient.post('http://127.0.0.1:5000/start', {
+  APIrequest(now,ratingList){
+    this.httpClient.post('http://localhost:5000/start', { //https://sutfeedbackapi.herokuapp.com/
       uid: this.item.teacher.uid, cid: this.courseParam ,
       attendanceId: this.attendanceSelectedKey,
       comment: this.feedbackForm.value.feedback,
       feeling: this.reactFeeling,
-      date: now
+      date: now,
+      ratingList: ratingList
       }).subscribe(
         response => {
           console.log(response);
         },
         err => {
-          console.log("ok");
+          console.log(err);
         }
       );
   }
