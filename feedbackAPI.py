@@ -21,10 +21,14 @@ configfeed = {
 }
 
 configclass = {
-  "apiKey": "AIzaSyB5M0bxNI8kj3enMyPAgaksUVXU8qrNa4M",
-  "authDomain": "classattendence-c4e10.firebaseapp.com",
-  "databaseURL": "https://classattendence-c4e10.firebaseio.com",
-  "storageBucket": "classattendence-c4e10.appspot.com"
+  "apiKey": "AIzaSyB2dzuzgKVykU54B6ODJnqWCuRNdoENzkk",
+  "authDomain": "sut-classroom.firebaseapp.com",
+  "databaseURL": "https://sut-classroom.firebaseio.com",
+  "storageBucket": "sut-classroom.appspot.com"
+  #"apiKey": "AIzaSyB5M0bxNI8kj3enMyPAgaksUVXU8qrNa4M",
+  #"authDomain": "classattendence-c4e10.firebaseapp.com",
+  #"databaseURL": "https://classattendence-c4e10.firebaseio.com",
+  #"storageBucket": "classattendence-c4e10.appspot.com"
 }
 test = {
   "apiKey": "AIzaSyASoxK5tz7VudMnMd9FL89841FxncG8pHA",
