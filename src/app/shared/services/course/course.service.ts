@@ -10,7 +10,7 @@ export class CourseService {
 
   getTeacher(): Observable<any> {
     return this._http
-      .get('https://classattendence-c4e10.firebaseio.com/users/.json')
+      .get('https://sut-classroom.firebaseio.com/users/.json')
       .map(response => { 
         return response.json(); 
       });
@@ -18,7 +18,7 @@ export class CourseService {
 
   getCourse(teacherUid, teacherData): Observable<any> {
     return this._http
-      .get(`https://classattendence-c4e10.firebaseio.com/users/${teacherUid}/course.json`)
+      .get(`https://sut-classroom.firebaseio.com/users/${teacherUid}/course.json`)
       .map(response => { 
         let obj = {teacher: {uid: teacherUid, data: teacherData}, course: response.json()}
         return obj; 
@@ -27,7 +27,7 @@ export class CourseService {
 
   getStudent(teacher, courseId, courseData, student_id): Observable<any> {
     return this._http
-      .get(`https://classattendence-c4e10.firebaseio.com/users/${teacher.uid}/course/${courseId}/students/${student_id}.json`)
+      .get(`https://sut-classroom.firebaseio.com/users/${teacher.uid}/course/${courseId}/students/${student_id}.json`)
       .map(response => { 
         let obj = {teacher: teacher, course: courseData, student: response.json()}
         return obj; 
