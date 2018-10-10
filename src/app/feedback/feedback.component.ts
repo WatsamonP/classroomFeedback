@@ -139,17 +139,17 @@ export class FeedbackComponent implements OnInit {
     this.feedbackCommentBox = true;
     this.reactFeelingIndex = index;
     if (index == 0) {
-      this.reactFeeling = 'ยากมาก';  // ข้อความ
+      this.reactFeeling = 'อยากจะบ้า';  // ข้อความ
     } else if (index == 1) {
-      this.reactFeeling = 'ยาก';  // ข้อความ
+      this.reactFeeling = 'อยากร้องไห้';  // ข้อความ
     } else if (index == 2) {
       this.reactFeeling = 'ไม่โอเค';  // ข้อความ
     } else if (index == 3) {
-      this.reactFeeling = 'โอเค';  // ข้อความ
+      this.reactFeeling = 'ยังไหว';  // ข้อความ
     } else if (index == 4) {
-      this.reactFeeling = 'ดี';  // ข้อความ
+      this.reactFeeling = 'สนุก';  // ข้อความ
     } else if (index == 5) {
-      this.reactFeeling = 'ดีมาก';  // ข้อความ
+      this.reactFeeling = 'สนุกมาก';  // ข้อความ
     } else if (index == 6) {
       this.reactFeeling = 'น่าเบื่อ';  // ข้อความ
     } else if (index == 7) {
