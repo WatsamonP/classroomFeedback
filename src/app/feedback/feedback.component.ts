@@ -177,8 +177,18 @@ export class FeedbackComponent implements OnInit {
       4: this.ratingList[4].currentRate,
       5: this.ratingList[5].currentRate,
     }
-    this.APIrequest(now,ratingList);
+    let isRating = true;
+    for (var i = 0; i < this.ratingList.length; i++){
+      if (this.ratingList[i].currentRate == 0)
+        isRating = false;
+    }
+    if (isRating){
+      this.APIrequest(now,ratingList);
+    }else{
+      this.toastr.error('กรุณาประเมินความพึงพอใจให้ครบ', 'ผิดพลาด')
+    }
   }
+
 
   insert(now,ratingList){
     this.afDb.object(`users/${this.authUid}/feedback/${this.courseParam}/${this.attendanceSelectedKey}`).update({
@@ -194,7 +204,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   error(){
-    this.toastr.error('เซิร์ฟเวอร์ไม่ตอบสนอง โปรดส่งความคิดเห็นอีกครั้ง')
+    this.toastr.error('เซิร์ฟเวอร์ไม่ตอบสนอง โปรดส่งความคิดเห็นอีกครั้ง', 'ผิดพลาด')
   }
 
   APIrequest(now,ratingList){
