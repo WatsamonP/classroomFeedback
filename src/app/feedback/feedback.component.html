@@ -87,7 +87,7 @@
           <tbody>
             <tr *ngFor="let rate of ratingList; let i = index">
               <td scope="row">{{ rate.index +1 }}</td>
-              <td scope="row" style="text-align: left;"> 
+              <td scope="row" style="text-align: left;">
                 <b>{{ rate.topic }}</b>&nbsp;<p style="display:inline; font-size:88%">{{ rate.detail }}</p>
               </td>
               <td scope="row">
@@ -131,7 +131,7 @@
         <div class="col-6">
           <button *ngIf="!feedbackCommentBox" type="button" class="btn btn-light btn-block" (click)="onClickReachFeedback()">
             <span class="wrapper">
-              <img [src]="emojiPath('fb-comment')" width='45px'>&nbsp;FFEDBACK
+              <img [src]="emojiPath('fb-comment')" width='45px'>&nbsp;FEEDBACK
             </span>
           </button>
 
