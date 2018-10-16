@@ -46,13 +46,11 @@ export class ScoreComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       this.courseParam = params.get('id');
       this.data.currentMessage.subscribe(message => {
-        this.item = message
+        this.item = message;
       })
       if (this.item == 'default message') {
         this.router.navigate(['/dashboard']);
-
       }
-
       this.subscription = this.reactionSvc.getReactions(this.itemId)
         .valueChanges()
         .subscribe(reactions => { })
@@ -63,8 +61,8 @@ export class ScoreComponent implements OnInit {
   ngOnInit() {
     this.allScore = []
     //let key = this.item.student.id;
-    if (this.item.student == null || this.item.student == undefined || 
-      this.item.course == null || this.item.course == undefined ) {
+    if (this.item.student == null || this.item.student == undefined ||
+      this.item.course == null || this.item.course == undefined) {
       return false
     }
 
@@ -139,7 +137,7 @@ export class ScoreComponent implements OnInit {
 
 
 
-
+  /*
   calGrade(score: Number) {
     let grade: String = '';
     if (score >= 80) {
@@ -161,10 +159,33 @@ export class ScoreComponent implements OnInit {
     }
 
     return grade;
+  }*/
+
+  calGrade(score) {
+    let grade: String = '';
+    if (score >= Number(this.item.course.gradeList.A)) {
+      grade = 'A'
+    } else if (score >= Number(this.item.course.gradeList.Bp)) {
+      grade = 'B+'
+    } else if (score >= Number(this.item.course.gradeList.B)) {
+      grade = 'B'
+    } else if (score >= Number(this.item.course.gradeList.Cp)) {
+      grade = 'C+'
+    } else if (score >= Number(this.item.course.gradeList.C)) {
+      grade = 'C'
+    } else if (score >= Number(this.item.course.gradeList.Dp)) {
+      grade = 'D+'
+    } else if (score >= Number(this.item.course.gradeList.D)) {
+      grade = 'D'
+    } else {
+      grade = 'F'
+    }
+
+    return grade;
   }
 
   public pushpage(path) {
-    console.log(this.item)
+    //console.log(this.item)
     if (path == 'feedback') {
       this.data.changeMessage(this.item)
       this.router.navigate(['/feedback', this.item.course.id]);
@@ -174,10 +195,14 @@ export class ScoreComponent implements OnInit {
     }
   }
 
-  public openEvent(content,score) {
-    this.scoreExpand = score.key;
-    console.log(this.item.student[this.scoreExpand])
-    console.log(score)
+  public openEvent(content, score) {
+    if ((score.key).toLowerCase() == 'homework') {
+      this.scoreExpand = 'hw';
+    } else {
+      this.scoreExpand = (score.key).toLowerCase();
+    }
+    //console.log(this.item.student[this.scoreExpand])
+    //console.log(score)
     this.modalService.open(content, { centered: true });
   }
 

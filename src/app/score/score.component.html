@@ -71,7 +71,7 @@
         </thead>
         <tbody>
           <tr>
-            <th scope="row" style="font-size:90%">{{summary.totalScore}}/{{summary.totalPercent}} คะแนน</th>
+            <th scope="row" style="font-size:90%">{{summary.totalScore | number : '1.2-2' }}/{{summary.totalPercent}} คะแนน</th>
             <th scope="row" style="font-size:90%">{{ summary.grade }}</th>
           </tr>
         </tbody>
@@ -84,6 +84,8 @@
     </div>
   </div>
 </div>
+
+
 
 <ng-template #showScore let-c="close" let-d="dismiss">
   <div class="modal-header bg-facebook text-light">
@@ -114,10 +116,10 @@
             </td>
             <td>
               <b>{{ item.student[scoreExpand][key].score }}</b>
-              <p class="text-success" *ngIf="scoreExpand == 'attendance' && item.student[scoreExpand][key].score !== '0'" style="display:inline; font-size:85%">
+              <p class="text-success" *ngIf="scoreExpand == 'attendance' && item.student[scoreExpand][key].score !== 0" style="display:inline; font-size:85%">
                 ( {{ item.student[scoreExpand][key].status}} )
               </p>
-              <p class="text-danger" *ngIf="scoreExpand == 'attendance' && item.student[scoreExpand][key].score == '0'" style="display:inline; font-size:85%">
+              <p class="text-danger" *ngIf="scoreExpand == 'attendance' && item.student[scoreExpand][key].score == 0" style="display:inline; font-size:85%">
                 ( {{ item.student[scoreExpand][key].status}} )
               </p>
             </td>
